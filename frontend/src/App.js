@@ -47,7 +47,7 @@ function GalleryStrip({ onOpen }) {
 
         let raf = 0;
         let last = 0;
-        const SPEED = 30; // px per second, gentle drift
+        const SPEED = 60; // px per second, gentle drift
         const tick = (now) => {
             const dt = last ? now - last : 0;
             last = now;

@@ -93,6 +93,12 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 ## Verification done (v14)
 Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling — continuous drift, invisible wraps, no jumps. If the strip appears frozen on a given machine, its OS is reporting reduced motion (Windows: Settings > Accessibility > Visual effects > Animation effects).
 
+## Implemented (July 2026, v15 — drift speed doubled)
+- Gallery drift 30 → 60 px/s (measured ~65px/s effective, ~2.2× faster); nothing else touched
+
+## Verification done (v15)
+Full cycle + wrap crossing at 375px (1.23 cycles) and 1440px (1.18 cycles): steady per-second deltas, zero anomalies, seamless wrap at the higher speed.
+
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
 - P1: Custom OG image (absolute URL) once domain is final
