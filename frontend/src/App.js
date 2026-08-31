@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
@@ -11,6 +12,123 @@ const GALLERY = [
     { src: "/g7.jpg", alt: "Sourire espiègle de Lauofgirly" },
     { src: "/g2.jpg", alt: "Lauofgirly en rose poudré" },
 ];
+
+function GalleryStrip({ onOpen }) {
+    const stripRef = useRef(null);
+    const dragState = useRef({ startX: 0, scrollLeft: 0, moved: false });
+    const [dragging, setDragging] = useState(false);
+    const [atStart, setAtStart] = useState(true);
+    const [atEnd, setAtEnd] = useState(false);
+
+    useEffect(() => {
+        const el = stripRef.current;
+        if (!el) return;
+        const updateEdges = () => {
+            setAtStart(el.scrollLeft <= 4);
+            setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+        };
+        updateEdges();
+        const onWheel = (e) => {
+            if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
+            const maxScroll = el.scrollWidth - el.clientWidth;
+            if (
+                (e.deltaY > 0 && el.scrollLeft < maxScroll - 1) ||
+                (e.deltaY < 0 && el.scrollLeft > 1)
+            ) {
+                e.preventDefault();
+                el.scrollLeft += e.deltaY;
+            }
+        };
+        el.addEventListener("scroll", updateEdges, { passive: true });
+        el.addEventListener("wheel", onWheel, { passive: false });
+        window.addEventListener("resize", updateEdges);
+        return () => {
+            el.removeEventListener("scroll", updateEdges);
+            el.removeEventListener("wheel", onWheel);
+            window.removeEventListener("resize", updateEdges);
+        };
+    }, []);
+
+    const onPointerDown = (e) => {
+        if (e.pointerType === "touch") return;
+        const el = stripRef.current;
+        dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, moved: false };
+        setDragging(true);
+    };
+
+    useEffect(() => {
+        if (!dragging) return;
+        const onMove = (e) => {
+            const dx = e.clientX - dragState.current.startX;
+            if (Math.abs(dx) > 6) dragState.current.moved = true;
+            stripRef.current.scrollLeft = dragState.current.scrollLeft - dx;
+        };
+        const onUp = () => setDragging(false);
+        window.addEventListener("pointermove", onMove);
+        window.addEventListener("pointerup", onUp);
+        return () => {
+            window.removeEventListener("pointermove", onMove);
+            window.removeEventListener("pointerup", onUp);
+        };
+    }, [dragging]);
+
+    const scrollByCard = (dir) => {
+        stripRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
+    };
+
+    const handleCardClick = (photo) => {
+        if (dragState.current.moved) {
+            dragState.current.moved = false;
+            return;
+        }
+        onOpen(photo);
+    };
+
+    const arrowBase =
+        "absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#E8B96A]/60 bg-[#FFF4F7] text-[#4A2233] shadow-[0_6px_18px_rgba(74,34,51,0.12)] transition-opacity duration-200 hover:bg-[#F7CAD9] md:flex";
+
+    return (
+        <div className="relative mx-auto mt-12 w-full max-w-md sm:max-w-xl lg:max-w-3xl">
+            <button
+                data-testid="gallery-arrow-prev"
+                aria-label="Photos précédentes"
+                onClick={() => scrollByCard(-1)}
+                className={`${arrowBase} left-3 ${atStart ? "pointer-events-none opacity-0" : "opacity-100"}`}
+            >
+                <ChevronLeft size={20} />
+            </button>
+            <button
+                data-testid="gallery-arrow-next"
+                aria-label="Photos suivantes"
+                onClick={() => scrollByCard(1)}
+                className={`${arrowBase} right-3 ${atEnd ? "pointer-events-none opacity-0" : "opacity-100"}`}
+            >
+                <ChevronRight size={20} />
+            </button>
+            <div
+                ref={stripRef}
+                data-testid="gallery-strip"
+                className={`no-scrollbar flex snap-x snap-mandatory select-none gap-5 overflow-x-auto px-[7vw] sm:px-8 md:cursor-grab ${
+                    dragging ? "md:cursor-grabbing" : ""
+                }`}
+                style={dragging ? { scrollSnapType: "none" } : undefined}
+                onPointerDown={onPointerDown}
+            >
+                {GALLERY.map((photo, i) => (
+                    <button
+                        key={photo.src}
+                        data-testid={`gallery-item-${i + 1}`}
+                        className="strip-card aspect-[3/4] w-[72vw] sm:w-[320px]"
+                        onClick={() => handleCardClick(photo)}
+                        aria-label={`Agrandir : ${photo.alt}`}
+                    >
+                        <img src={photo.src} alt={photo.alt} loading="lazy" draggable={false} />
+                    </button>
+                ))}
+            </div>
+        </div>
+    );
+}
 
 function CtaButton({ testId }) {
     const handleClick = (e) => {
@@ -178,30 +296,31 @@ export default function App() {
                 {/* Hero — full bleed on mobile, contained on larger screens */}
                 <header
                     data-testid="hero-portrait"
-                    className="lg:grid lg:min-h-[100svh] lg:grid-cols-[45%_55%] lg:items-center"
+                    className="lg:mx-auto lg:flex lg:min-h-[100svh] lg:w-full lg:max-w-[1100px] lg:items-center lg:justify-center lg:gap-20 lg:px-10 lg:py-24"
                 >
-                    <div className="md:mx-auto md:max-w-md md:pt-12 lg:flex lg:h-full lg:max-w-none lg:items-center lg:justify-center lg:pt-0">
+                    <div className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0">
                         <div className="relative lg:w-fit">
                             <img
                                 src="/hero.jpg"
                                 alt="Portrait de Lauofgirly"
-                                className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] md:h-auto md:min-h-0 md:object-contain lg:h-[86svh] lg:w-auto lg:max-w-[92%]"
+                                className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] md:h-auto md:min-h-0 md:object-contain lg:h-[74svh] lg:w-auto"
                                 loading="eager"
                             />
-                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7] lg:h-1/5" />
-                            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/5 bg-gradient-to-l from-[#FFF4F7]/90 to-transparent lg:block" />
+                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7] lg:h-1/4" />
+                            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/4 bg-gradient-to-l from-[#FFF4F7] to-transparent lg:block" />
+                            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-[#FFF4F7]/80 to-transparent lg:block" />
                             <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
                                 Lauofgirly
                             </h1>
                         </div>
                     </div>
-                    <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center lg:gap-9 lg:px-16">
-                        <h1 className="font-script text-center text-8xl leading-tight text-[#4A2233] xl:text-9xl">
+                    <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
+                        <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
                             Lauofgirly
                         </h1>
                         <p
                             data-testid="tagline-desktop"
-                            className="max-w-sm text-center text-lg font-medium leading-relaxed text-[#4A2233]/75"
+                            className="max-w-sm text-left text-lg font-medium leading-relaxed text-[#4A2233]/75"
                         >
                             Ton plus joli détour du jour, rien que pour toi.
                         </p>
@@ -241,24 +360,7 @@ export default function App() {
                             Un aperçu de mon monde
                         </p>
                     </div>
-                    <div className="relative mx-auto mt-12 w-full max-w-md sm:max-w-xl lg:max-w-3xl">
-                        <div
-                            data-testid="gallery-strip"
-                            className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-[7vw] sm:px-8"
-                        >
-                        {GALLERY.map((photo, i) => (
-                            <button
-                                key={photo.src}
-                                data-testid={`gallery-item-${i + 1}`}
-                                className="strip-card aspect-[3/4] w-[72vw] sm:w-[320px]"
-                                onClick={() => setLightboxPhoto(photo)}
-                                aria-label={`Agrandir : ${photo.alt}`}
-                            >
-                                <img src={photo.src} alt={photo.alt} loading="lazy" />
-                            </button>
-                        ))}
-                        </div>
-                    </div>
+                    <GalleryStrip onOpen={setLightboxPhoto} />
                 </section>
 
                 {/* Repeated CTA */}

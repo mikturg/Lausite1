@@ -29,6 +29,15 @@ Mobile visitors arriving from Lauofgirly's Instagram/TikTok bios.
 ## Verification done (v3)
 Hero checked at 375px (full-bleed, face intact), 768px (centred contained column), 1024px and 1440px (two-column, face and torso never cropped). Strip peek confirmed at every width; watermark fully on-screen; stray kiss gone. Intro measured at ~3.5s total with slower mid-write capture ("Lauofgi"). Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
+## Implemented (July 2026, v4 — desktop polish round 2)
+- Intro investigation: no viewport gating exists; verified playing identically at 1440px fresh session (root cause of the report: sessionStorage persists across reloads in the same desktop tab, so it never replays on that tab — the requested once-per-session behavior; OS-level reduced-motion also skips it by design)
+- Desktop gallery: click-and-drag (window-listener based, snap disabled during drag, drag doesn't trigger lightbox), trackpad/wheel horizontal scrolling (hands back to page scroll at strip ends), and arrow controls on both edges (hidden below 768px, auto-hide at strip start/end); mobile touch swipe untouched
+- Desktop hero rework: whole block centred as one unit capped at 1100px with normal gap; portrait larger (74svh, natural proportion); name/tagline/button left-aligned as a group, vertically centred against the image; cream gradient fades on right/left/bottom image edges; generous vertical breathing room
+- Bug found + fixed during verification: pointer capture was swallowing card clicks (lightbox wouldn't open) — replaced with window-listener drag
+
+## Verification done (v4)
+Intro fresh-session at 1440px: plays and completes. Desktop gallery: arrows advance strip (0→488), drag works (no lightbox on drag), wheel works both directions, plain click opens lightbox. Mobile 375px: hero unchanged, arrows hidden, strip scrolls, tap opens lightbox. Hero verified at 1024/1280/1440px — face never cut, block centred.
+
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
 - P1: Custom OG image (absolute URL) once domain is final
