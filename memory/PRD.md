@@ -81,8 +81,12 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Gallery autoplay: continuous ~30px/s drift via rAF, 3× duplicated photos with invisible ±setWidth teleport = seamless infinite loop both directions, pauses on hover/drag/wheel/arrow (1.5s grace), stops offscreen (IntersectionObserver) and for reduced-motion; scroll-snap removed (conflicts with drift)
 - Gallery now 5 photos: added g5.jpg + g3.jpg (same card size/crop; g2/g4 permanently excluded, g2 deleted from disk); arrows always visible (infinite strip); 15 rendered cards with unique testids
 
-## Verification done (v12)
-375px: autoplay drifts and stays bounded in the middle band (seamless wrap), cherries rotate on horizontal drag and page scrolls over them vertically, reduced-motion emulation (intro skipped, strip static, cherries static-but-draggable). 1440px: autoplay, hover pause + resume, backward drag past first card loops seamlessly, arrows and lightbox work. 768px: autoplay + spacing visual.
+## Implemented (July 2026, v13 — cherries relight + autoscroll re-verify)
+- Cherries relit: ACES tone mapping (exposure 1.15), ambient 0.85 + hemisphere 1.5 + warm key 2.6 + pink fill 1.15 from opposite side; materials patched via onBeforeCompile — saturation ×1.4 and brightness ×1.12 on the sampled texture (texture file untouched), roughness capped 0.55, metalness 0. Result: vivid cherry red, fresh green leaf, glossy but not blown highlights
+- Gallery autoscroll re-verified end-to-end per restated spec (implementation from v12 unchanged)
+
+## Verification done (v13)
+375px: 2.12 full loop cycles over ~100s, 2 wraps, every 2s sample a normal drift step or a clean teleport — zero anomalies. 1440px: parked 120px before the wrap boundary and let autoplay cross it — teleport landed 85px into the middle copy, before/after frames show continuous card flow with no gap or snap. Cherries relight confirmed visually at 375px and 1440px across rotation angles.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

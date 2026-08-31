@@ -23,14 +23,21 @@ export default function CherriesCharm({ className = "" }) {
                 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
                 renderer.setSize(size, size);
                 renderer.setClearColor(0x000000, 0);
+                renderer.toneMapping = THREE.ACESFilmicToneMapping;
+                renderer.toneMappingExposure = 1.15;
 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
 
-                scene.add(new THREE.HemisphereLight(0xfff6ec, 0xf7cad9, 1.1));
-                const key = new THREE.DirectionalLight(0xfff1de, 1.3);
+                // Bright, warm, wraparound lighting: nothing falls to black
+                scene.add(new THREE.AmbientLight(0xfff0ea, 0.85));
+                scene.add(new THREE.HemisphereLight(0xfff8f0, 0xf2d4dc, 1.5));
+                const key = new THREE.DirectionalLight(0xfff2df, 2.6);
                 key.position.set(2.5, 3, 4);
                 scene.add(key);
+                const fill = new THREE.DirectionalLight(0xffdfe9, 1.15);
+                fill.position.set(-3, 0.5, -2.5);
+                scene.add(fill);
 
                 const gltf = await new GLTFLoader().loadAsync("/cherries.glb");
                 if (cancelled) {
@@ -42,6 +49,26 @@ export default function CherriesCharm({ className = "" }) {
                 // translation, then scale/rotate only the pivot, so the model's own
                 // baked transforms can't shift it off the rotation axis.
                 const inner = gltf.scene;
+                // Brighten and saturate the materials (texture itself untouched),
+                // keep glossy highlights under ACES so they roll off, not blow out
+                inner.traverse((obj) => {
+                    if (!obj.isMesh || !obj.material) return;
+                    const mats = Array.isArray(obj.material) ? obj.material : [obj.material];
+                    mats.forEach((m) => {
+                        if (!m.isMeshStandardMaterial) return;
+                        m.metalness = 0;
+                        m.roughness = Math.min(m.roughness ?? 1, 0.55);
+                        m.onBeforeCompile = (shader) => {
+                            shader.fragmentShader = shader.fragmentShader.replace(
+                                "#include <map_fragment>",
+                                `#include <map_fragment>
+                                float lum = dot(diffuseColor.rgb, vec3(0.299, 0.587, 0.114));
+                                diffuseColor.rgb = mix(vec3(lum), diffuseColor.rgb, 1.4) * 1.12;`
+                            );
+                        };
+                        m.needsUpdate = true;
+                    });
+                });
                 const pivot = new THREE.Group();
                 pivot.add(inner);
                 const box = new THREE.Box3().setFromObject(pivot);
