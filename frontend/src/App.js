@@ -9,7 +9,6 @@ const GALLERY = [
     { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
     { src: "/g6.jpg", alt: "Lauofgirly devant le miroir" },
     { src: "/g7.jpg", alt: "Sourire espiègle de Lauofgirly" },
-    { src: "/g2.jpg", alt: "Lauofgirly en rose poudré" },
 ];
 
 function GalleryStrip({ onOpen }) {

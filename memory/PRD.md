@@ -42,8 +42,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Page behind the intro is inert + aria-hidden until the intro finishes
 - Kiss press animation tightened to 0.6s per spec
 
-## Verification done (v5)
-1440px: full sequence watched (mid-write "Lauofgir" captured), then 3 refreshes — replayed every time; keypress skips; next load replays after skip. 375px: same replay ×3, tap skips, replays after skip. Identical timing/visuals both widths. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v6 — gallery curation)
+- Removed 4th gallery card (g2.jpg, pink plaid fitting room) — too suggestive for IG/TikTok bio linking; file deleted from frontend/public (confirmed no longer served as an image)
+- Strip now 3 cards (g1, g6, g7), same card size/spacing/peek — no layout change needed, 3-card rhythm verified
+- SFW audit of remaining images: hero (face-forward selfie, black top), g1 (pink sweatshirt face close-up), g6 (white hoodie, hand over mouth, face-framed), g7 (black tee, tongue out, face close-up) — all face-centred and fully clothed, none flagged
+
+## Verification done (v6)
+375px: 3 cards, 4th gone, peek intact. 1440px: 3 cards, peek (maxScroll 296), arrows work (advance to end, prev appears). /g2.jpg returns SPA fallback HTML, not the image; file absent on disk.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
