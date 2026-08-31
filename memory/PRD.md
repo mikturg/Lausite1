@@ -85,8 +85,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Cherries relit: ACES tone mapping (exposure 1.15), ambient 0.85 + hemisphere 1.5 + warm key 2.6 + pink fill 1.15 from opposite side; materials patched via onBeforeCompile — saturation ×1.4 and brightness ×1.12 on the sampled texture (texture file untouched), roughness capped 0.55, metalness 0. Result: vivid cherry red, fresh green leaf, glossy but not blown highlights
 - Gallery autoscroll re-verified end-to-end per restated spec (implementation from v12 unchanged)
 
-## Verification done (v13)
-375px: 2.12 full loop cycles over ~100s, 2 wraps, every 2s sample a normal drift step or a clean teleport — zero anomalies. 1440px: parked 120px before the wrap boundary and let autoplay cross it — teleport landed 85px into the middle copy, before/after frames show continuous card flow with no gap or snap. Cherries relight confirmed visually at 375px and 1440px across rotation angles.
+## Implemented (July 2026, v14 — autoscroll diagnosis + robustness fix)
+- Diagnosis (instrumented, no changes first): loop fires and moves scrollLeft (~31px/s), no transform fighting, scrollSnapType is none (snap removed in v12), pause flags initialise unpaused, IntersectionObserver reports correctly. Remaining causes: (a) prefers-reduced-motion — the marquee intentionally freezes when the OS reports reduce, which is the case on the reporter's Windows machine (animation effects off); this is the specified behaviour, kept. (b) Structural fragility: `scrollLeft += 0.5px/frame` never accumulates on browsers with integer-rounded scrollLeft (older Safari)
+- Fix: float position accumulator — JS tracks exact position and writes absolute scrollLeft each frame; manual interactions resync the accumulator. Seamless wrap unchanged
+- Verified: 2.16 cycles at 375px and 2.17 cycles at 1440px, 2 wraps each, zero anomalous deltas, band-consistent
+
+## Verification done (v14)
+Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling — continuous drift, invisible wraps, no jumps. If the strip appears frozen on a given machine, its OS is reporting reduced motion (Windows: Settings > Accessibility > Visual effects > Animation effects).
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

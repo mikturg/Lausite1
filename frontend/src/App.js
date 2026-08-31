@@ -29,6 +29,10 @@ function GalleryStrip({ onOpen }) {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
         const setWidth = () => el.scrollWidth / 3;
         el.scrollLeft = setWidth();
+        // Float accumulator: some browsers (older Safari) round scrollLeft to
+        // integers, so `+= 0.5px/frame` would never accumulate. We track the
+        // position ourselves and write absolute values instead.
+        let pos = el.scrollLeft;
 
         const wrap = () => {
             const sw = setWidth();
@@ -55,7 +59,13 @@ function GalleryStrip({ onOpen }) {
                 !draggingRef.current &&
                 now > a.pauseUntil
             ) {
-                el.scrollLeft += (SPEED * dt) / 1000;
+                const sw = setWidth();
+                pos += (SPEED * dt) / 1000;
+                if (pos >= sw * 2) pos -= sw;
+                else if (pos < sw) pos += sw;
+                el.scrollLeft = pos;
+            } else {
+                pos = el.scrollLeft;
             }
             wrap();
             raf = requestAnimationFrame(tick);
