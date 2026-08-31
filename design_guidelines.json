@@ -1,0 +1,87 @@
+{
+  "project_name": "Lauofgirly - Link in Bio Beauty Experience",
+  "app_type": "mobile_web_app",
+  "archetype": "ORGANIC & EARTHY / LUXURY BEAUTY (Pastel & Soft French Aesthetics)",
+  "language": "fr",
+  "colors": {
+    "background": "#FFF4F7",
+    "surface": "#F7CAD9",
+    "primary_action": "#FF4D8D",
+    "accent_gold": "#E8B96A",
+    "text_plum": "#4A2233",
+    "text_plum_muted": "rgba(74, 34, 51, 0.7)",
+    "rules": "Hot pink (#FF4D8D) is reserved EXCLUSIVELY for the main CTA button ('Viens voir') and its repeating instance. No other element on the page may use #FF4D8D. Pure black (#000000) is strictly forbidden."
+  },
+  "typography": {
+    "script_font": "'Great Vibes', 'Parisienne', cursive",
+    "sans_font": "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif",
+    "google_fonts_url": "https://fonts.googleapis.com/css2?family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap",
+    "hierarchy": {
+      "name_hero": "font-script text-5xl sm:text-6xl tracking-wide leading-tight drop-shadow-sm",
+      "tagline": "font-sans text-base sm:text-lg font-medium leading-relaxed text-[#4A2233]/80 tracking-normal",
+      "button": "font-sans text-lg sm:text-xl font-bold tracking-wide text-white uppercase",
+      "section_heading": "font-sans text-xs tracking-[0.2em] font-bold uppercase text-[#E8B96A]"
+    }
+  },
+  "motion": {
+    "intro_animation": {
+      "duration": "< 3s total",
+      "overlay_bg": "#FFF4F7",
+      "sequence": [
+        "1. Blank cream screen (#FFF4F7)",
+        "2. Pink lipstick kiss mark presses in center with slight bounce & tilt",
+        "3. Beat later: her name 'Lauofgirly' writes itself in script below",
+        "4. Fades out into main page"
+      ],
+      "gating": "sessionStorage check ('lauofgirly_intro_seen')",
+      "skippable": "Click/Tap anywhere immediately dismisses intro",
+      "accessibility": "Respect prefers-reduced-motion to skip overlay instantly"
+    },
+    "cta_button_idle": "Gentle breathing pulse animation (scale [1.0, 1.03, 1.0], opacity pulse, soft halo shadow glow) to draw visitor focus without feeling flashing or cheap",
+    "kiss_motif_interaction": "Small kiss mark motif appears on button hover/tap and quietly sits as an aesthetic stamp in one corner of the photo gallery"
+  },
+  "layout_and_grid": {
+    "container": "max-w-md mx-auto min-h-screen px-4 py-6 flex flex-col items-center justify-start text-center relative selection:bg-[#F7CAD9] selection:text-[#4A2233]",
+    "hero_portrait": "relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden shadow-xl border-2 border-[#E8B96A]/30 mb-6 group",
+    "gallery_grid": "grid grid-cols-2 gap-3.5 my-8 w-full auto-rows-[140px] sm:auto-rows-[180px]",
+    "gallery_asymmetry": [
+      "Item 1: col-span-2 row-span-2 (Dominant editorial portrait)",
+      "Item 2: col-span-1 row-span-1 (Square detail highlight)",
+      "Item 3: col-span-1 row-span-2 (Tall vertical shot)",
+      "Item 4: col-span-1 row-span-1 (Soft beauty flatlay)",
+      "Item 5: col-span-1 row-span-1 (Chic lifestyle gesture)",
+      "Item 6: col-span-2 row-span-1 (Wide wide panorama asset with kiss mark corner overlay)"
+    ]
+  },
+  "media": {
+    "kiss_mark": "https://images.unsplash.com/photo-1622937309508-db3273465d8b?auto=format&fit=crop&q=80&w=300",
+    "hero_image": "https://images.pexels.com/photos/6962095/pexels-photo-6962095.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=900&w=700",
+    "gallery": [
+      "https://images.unsplash.com/photo-1676149038712-f9aebb568321?auto=format&fit=crop&q=80&w=800",
+      "https://images.pexels.com/photos/6541624/pexels-photo-6541624.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+      "https://images.unsplash.com/photo-1646548675838-0f6982ffa5e4?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1763539818420-165e69b7489b?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1786641744889-094a8ca10a38?auto=format&fit=crop&q=80&w=800",
+      "https://images.unsplash.com/photo-1660407135986-e095cfaae04b?auto=format&fit=crop&q=80&w=800"
+    ]
+  },
+  "seo_and_meta": {
+    "title": "Lauofgirly | Univers Beauté & Sensualité Douce",
+    "meta_description": "Découvrez le monde exclusif de Lauofgirly. Contenus beauté, esthétique raffinée et moments privilégiés.",
+    "og_title": "Lauofgirly — Mon Univers Exclusif",
+    "og_description": "Rejoins-moi pour découvrir mes photos et créations exclusives. Un clic pour tout voir.",
+    "og_type": "website",
+    "destination_link": "https://example.com/lauofgirly-exclusive"
+  },
+  "instructions_to_main_agent": [
+    "Ensure html lang='fr' is configured on document root.",
+    "Load Google Fonts ('Great Vibes' and 'Plus Jakarta Sans') in index.html.",
+    "Implement skippable Intro overlay with lipstick kiss animation (framer-motion or CSS keyframes) stored in sessionStorage.",
+    "Strictly follow color rules: #FFF4F7 background, #F7CAD9 surfaces, #E8B96A gold borders/accents, #4A2233 plum text, and ONLY the two CTA buttons in hot pink #FF4D8D.",
+    "Include both primary and secondary CTA buttons labeled 'Viens voir' with target='_blank' rel='noopener noreferrer'.",
+    "Create interactive photo gallery lightbox when tapping any image in the irregular grid.",
+    "Add discreet kiss mark icon on hover/tap of CTA button and in corner of gallery card.",
+    "Ensure responsiveness starting at mobile 375px width up to desktop preview centered container.",
+    "Add proper data-testid attributes (e.g., data-testid='intro-overlay', data-testid='hero-portrait', data-testid='cta-button-primary', data-testid='cta-button-secondary', data-testid='gallery-grid', data-testid='lightbox-modal') on key elements."
+  ]
+}
