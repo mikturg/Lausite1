@@ -26,8 +26,6 @@ export default function CherriesCharm({ className = "" }) {
 
                 const scene = new THREE.Scene();
                 const camera = new THREE.PerspectiveCamera(30, 1, 0.1, 100);
-                camera.position.set(0, 0, 3.1);
-                camera.lookAt(0, 0, 0);
 
                 scene.add(new THREE.HemisphereLight(0xfff6ec, 0xf7cad9, 1.1));
                 const key = new THREE.DirectionalLight(0xfff1de, 1.3);
@@ -42,13 +40,18 @@ export default function CherriesCharm({ className = "" }) {
 
                 const group = gltf.scene;
                 const box = new THREE.Box3().setFromObject(group);
-                const center = box.getCenter(new THREE.Vector3());
-                const dims = box.getSize(new THREE.Vector3());
-                const maxDim = Math.max(dims.x, dims.y, dims.z) || 1;
-                const scale = 1.7 / maxDim;
+                const sphere = box.getBoundingSphere(new THREE.Sphere());
+                const scale = 1 / (sphere.radius || 1);
                 group.scale.setScalar(scale);
-                group.position.sub(center.multiplyScalar(scale));
+                group.position.sub(sphere.center.clone().multiplyScalar(scale));
                 scene.add(group);
+
+                // Fit the full bounding sphere with padding so the silhouette
+                // stays inside the frustum at every rotation angle.
+                const fitDistance =
+                    1 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+                camera.position.set(0, 0, fitDistance * 1.22);
+                camera.lookAt(0, 0, 0);
                 host.appendChild(renderer.domElement);
 
                 let raf = 0;

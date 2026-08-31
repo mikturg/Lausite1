@@ -316,19 +316,13 @@ export default function App() {
                             <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/4 bg-gradient-to-l from-[#FFF4F7] to-transparent lg:block" />
                             <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-[#FFF4F7]/80 to-transparent lg:block" />
                             <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
-                                <span className="relative inline-block">
-                                    Lauofgirly
-                                    <CherriesCharm className="pointer-events-none absolute -right-5 -top-16 h-[92px] w-[92px] md:-right-8 md:-top-20 md:h-[112px] md:w-[112px]" />
-                                </span>
+                                Lauofgirly
                             </h1>
                         </div>
                     </div>
                     <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
-                        <h1 className="font-script relative text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
-                            <span className="relative inline-block">
-                                Lauofgirly
-                                <CherriesCharm className="pointer-events-none absolute -right-24 -top-12 h-[124px] w-[124px] xl:-right-32 xl:h-[140px] xl:w-[140px]" />
-                            </span>
+                        <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
+                            Lauofgirly
                         </h1>
                         <p
                             data-testid="tagline-desktop"
@@ -365,9 +359,14 @@ export default function App() {
                     </div>
                 </div>
 
+                {/* Cherries ornament — centred between the first button and the gallery */}
+                <div className="mt-16 flex w-full justify-center lg:mt-12">
+                    <CherriesCharm className="h-[120px] w-[120px] md:h-[136px] md:w-[136px] lg:h-[150px] lg:w-[150px]" />
+                </div>
+
                 {/* Gallery — horizontal strip */}
                 <section
-                    className="relative mt-32 w-full overflow-hidden"
+                    className="relative mt-16 w-full overflow-hidden lg:mt-20"
                     aria-label="Galerie de photos"
                 >
                     <img

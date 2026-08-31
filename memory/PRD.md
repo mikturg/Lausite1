@@ -65,8 +65,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Footer attribution line (licence-required): "Cherries by siotech2011, licensed under CC BY 4.0" with both links, muted 10px style
 - "Viens voir" button placement untouched
 
-## Verification done (v9)
-375/768/1440: canvas mounts, rotation confirmed (leaf position differs between frames 1.5s apart), no overlap of letters/tagline/button at any width, hero usable immediately after intro skip while model still loads, footer attribution text present. Mobile placement nudged 8px up after first pass showed the cherry grazing the "y" curl.
+## Implemented (July 2026, v10 — cherries cropping fix + reposition)
+- Cropping root cause: camera distance was fitted to the model's frontal bounding box (1.7 units vs ~1.66 frustum height) — fixed by fitting against the bounding SPHERE (covers every rotation angle) with 22% padding
+- Charm moved out of the name area: now page-centred below the first "Viens voir" button (single shared placement after the mobile CTA block / after the hero on desktop), 120px mobile / 136px md / 150px lg, gallery top margin tightened (mt-32 → mt-16/20) to absorb the added height
+- Name spans reverted to plain text; no charm near the name anywhere
+
+## Verification done (v10)
+Full rotation watched at 375/768/1440 (4 frames spanning ~9.6s each): cherries whole at every angle, leaf and stems never clipped. Charm box confirmed page-centred (left 645 + w150 = centre 720/1440). No overlap with button, name, tagline or gallery at any width. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
