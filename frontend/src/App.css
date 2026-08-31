@@ -13,7 +13,7 @@
     justify-content: center;
     background-color: #fff4f7;
     cursor: pointer;
-    transition: opacity 0.45s ease;
+    transition: opacity 0.5s ease;
 }
 
 .intro-overlay.intro-fading {
@@ -194,18 +194,12 @@
 /* ---------- Kiss motif ---------- */
 .kiss-watermark {
     position: absolute;
-    right: -4rem;
+    right: 0.75rem;
     top: 50%;
-    width: 19rem;
+    width: 15rem;
     transform: translateY(-50%) rotate(-14deg);
     opacity: 0.07;
     pointer-events: none;
-}
-
-.kiss-corner {
-    width: 40px;
-    transform: rotate(10deg);
-    opacity: 0.8;
 }
 
 /* ---------- Lightbox ---------- */

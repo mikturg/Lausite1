@@ -34,7 +34,7 @@ function CtaButton({ testId }) {
 }
 
 const WRITE_START_MS = 950;
-const WRITE_WINDOW_MS = 1250;
+const WRITE_WINDOW_MS = 1800;
 
 function HandwrittenName() {
     const svgRef = useRef(null);
@@ -97,8 +97,8 @@ function Intro({ onDone }) {
 
     useEffect(() => {
         timers.current = [
-            setTimeout(() => setFading(true), 2550),
-            setTimeout(finish, 2950),
+            setTimeout(() => setFading(true), 3150),
+            setTimeout(finish, 3650),
         ];
         return () => timers.current.forEach(clearTimeout);
     }, [finish]);
@@ -175,22 +175,44 @@ export default function App() {
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
 
             <main className="flex min-h-screen w-full flex-col">
-                {/* Hero — full bleed */}
-                <header data-testid="hero-portrait" className="relative w-full">
-                    <img
-                        src="/hero.jpg"
-                        alt="Portrait de Lauofgirly"
-                        className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] sm:h-[88svh] lg:h-[94svh] lg:object-[center_12%]"
-                        loading="eager"
-                    />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7]" />
-                    <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] sm:text-8xl">
-                        Lauofgirly
-                    </h1>
+                {/* Hero — full bleed on mobile, contained on larger screens */}
+                <header
+                    data-testid="hero-portrait"
+                    className="lg:grid lg:min-h-[100svh] lg:grid-cols-[45%_55%] lg:items-center"
+                >
+                    <div className="md:mx-auto md:max-w-md md:pt-12 lg:flex lg:h-full lg:max-w-none lg:items-center lg:justify-center lg:pt-0">
+                        <div className="relative lg:w-fit">
+                            <img
+                                src="/hero.jpg"
+                                alt="Portrait de Lauofgirly"
+                                className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] md:h-auto md:min-h-0 md:object-contain lg:h-[86svh] lg:w-auto lg:max-w-[92%]"
+                                loading="eager"
+                            />
+                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7] lg:h-1/5" />
+                            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/5 bg-gradient-to-l from-[#FFF4F7]/90 to-transparent lg:block" />
+                            <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
+                                Lauofgirly
+                            </h1>
+                        </div>
+                    </div>
+                    <div className="hidden lg:flex lg:flex-col lg:items-center lg:justify-center lg:gap-9 lg:px-16">
+                        <h1 className="font-script text-center text-8xl leading-tight text-[#4A2233] xl:text-9xl">
+                            Lauofgirly
+                        </h1>
+                        <p
+                            data-testid="tagline-desktop"
+                            className="max-w-sm text-center text-lg font-medium leading-relaxed text-[#4A2233]/75"
+                        >
+                            Ton plus joli détour du jour, rien que pour toi.
+                        </p>
+                        <div className="w-full max-w-xs">
+                            <CtaButton testId="cta-button-primary-desktop" />
+                        </div>
+                    </div>
                 </header>
 
-                {/* Tagline + first CTA */}
-                <div className="mx-auto flex w-full max-w-md flex-col items-center px-6">
+                {/* Tagline + first CTA (mobile / tablet) */}
+                <div className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden">
                     <p
                         data-testid="tagline"
                         className="mt-16 max-w-xs text-center text-base font-medium leading-relaxed text-[#4A2233]/80"
@@ -219,10 +241,11 @@ export default function App() {
                             Un aperçu de mon monde
                         </p>
                     </div>
-                    <div
-                        data-testid="gallery-strip"
-                        className="no-scrollbar relative mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[7vw] sm:px-8"
-                    >
+                    <div className="relative mx-auto mt-12 w-full max-w-md sm:max-w-xl lg:max-w-3xl">
+                        <div
+                            data-testid="gallery-strip"
+                            className="no-scrollbar flex snap-x snap-mandatory gap-5 overflow-x-auto px-[7vw] sm:px-8"
+                        >
                         {GALLERY.map((photo, i) => (
                             <button
                                 key={photo.src}
@@ -234,14 +257,7 @@ export default function App() {
                                 <img src={photo.src} alt={photo.alt} loading="lazy" />
                             </button>
                         ))}
-                    </div>
-                    <div className="relative mx-auto mt-8 w-full max-w-md px-6">
-                        <img
-                            src="/bisou-rose.png"
-                            alt=""
-                            aria-hidden="true"
-                            className="kiss-corner ml-auto"
-                        />
+                        </div>
                     </div>
                 </section>
 

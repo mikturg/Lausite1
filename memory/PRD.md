@@ -21,6 +21,14 @@ Mobile visitors arriving from Lauofgirly's Instagram/TikTok bios.
 ## Verification done (v2)
 375px: intro strokes captured mid-write (partial "L", "Lauof"), sequence completes, page appears; strip swipes with peek; both CTAs render. Desktop 1920px: hero face intact, strip and watermark hold up. Button navigation intentionally inert while placeholder is set.
 
+## Implemented (July 2026, v3 — desktop layout + intro pacing fixes)
+- Hero responsive restructure: full-bleed kept below 768px; 768–1023px becomes a centred single column with portrait capped at max-w-md; ≥1024px becomes two-column (45% contained portrait at natural 4:5, right column with script name + tagline + CTA vertically centred), cream fills the rest, soft gradients where image meets background
+- Desktop gallery: strip capped (max-w-xl/max-w-3xl) so the next card keeps peeking; watermark repositioned fully inside the visible area; stray corner kiss removed — only the pale watermark remains
+- Intro pacing: kiss 0.6s + hold, handwriting over ~1.8s with ease-in-out per glyph, 0.4s hold on the finished name, 0.5s fade — ~3.5s total; still skippable, once per session, reduced-motion skips
+
+## Verification done (v3)
+Hero checked at 375px (full-bleed, face intact), 768px (centred contained column), 1024px and 1440px (two-column, face and torso never cropped). Strip peek confirmed at every width; watermark fully on-screen; stray kiss gone. Intro measured at ~3.5s total with slower mid-write capture ("Lauofgi"). Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
 - P1: Custom OG image (absolute URL) once domain is final
