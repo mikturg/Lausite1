@@ -52,8 +52,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Added subtle kiss "breathing" (scale 1↔1.035 over 3.4s loop) during the holds so the screen never feels dead — disclosed to user
 - Skip (click/tap/keypress), replay-on-every-load, reduced-motion skip all unchanged
 
-## Verification done (v7)
-375px: total ~5.2s measured from selector mount (≈5.5s real), kiss-only hold and mid-writing beats captured, replay works. 1440px: ~5.3s measured (≈5.5s real), replay and keypress skip confirmed. Identical visuals both widths.
+## Implemented (July 2026, v8 — new tagline)
+- Tagline replaced with two forced lines: "T'as eu une grosse journée au travail?" / "J'ai la solution pour que tu passes une belle soirée.." (typographic apostrophes, user's double period kept)
+- Mobile: block spans with whitespace-nowrap, full-viewport-width container, 13px (reduced from 16px per user's "reduce rather than wrap" rule), leading 1.9; verified single-line at 375px AND 360px
+- Desktop: same two lines, text-lg, max-w-md, left-aligned group unchanged
+
+## Verification done (v8)
+375px + 360px: both lines on their own single line, no clipping, no horizontal page overflow. 1440px: lines 423px wide within max-w-md, left-aligned under the script name.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

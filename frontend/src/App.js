@@ -325,9 +325,14 @@ export default function App() {
                         </h1>
                         <p
                             data-testid="tagline-desktop"
-                            className="max-w-sm text-left text-lg font-medium leading-relaxed text-[#4A2233]/75"
+                            className="max-w-md text-left text-lg font-medium leading-[1.9] text-[#4A2233]/75"
                         >
-                            Ton plus joli détour du jour, rien que pour toi.
+                            <span className="block whitespace-nowrap">
+                                T’as eu une grosse journée au travail?
+                            </span>
+                            <span className="block whitespace-nowrap">
+                                J’ai la solution pour que tu passes une belle soirée..
+                            </span>
                         </p>
                         <div className="w-full max-w-xs">
                             <CtaButton testId="cta-button-primary-desktop" />
@@ -339,9 +344,14 @@ export default function App() {
                 <div className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden">
                     <p
                         data-testid="tagline"
-                        className="mt-16 max-w-xs text-center text-base font-medium leading-relaxed text-[#4A2233]/80"
+                        className="mt-16 w-screen text-center text-[13px] font-medium leading-[1.9] text-[#4A2233]/80"
                     >
-                        Ton plus joli détour du jour, rien que pour toi.
+                        <span className="block whitespace-nowrap">
+                            T’as eu une grosse journée au travail?
+                        </span>
+                        <span className="block whitespace-nowrap">
+                            J’ai la solution pour que tu passes une belle soirée..
+                        </span>
                     </p>
                     <div className="mt-10 w-full max-w-xs">
                         <CtaButton testId="cta-button-primary" />
