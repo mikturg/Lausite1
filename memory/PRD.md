@@ -75,8 +75,14 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Camera fit now: pivot-wrapper centring (immune to the GLB's baked node transforms) + bounding-sphere fit with padding tuned from measured silhouette sweep (1.05 → worst margin 65px at every angle)
 - Size tripled: canvas 320px mobile / 360px md / 420px lg; fruit renders ~175px wide on mobile (vs ~55px before); surrounding spacing tightened (mt-12) to absorb height
 
-## Verification done (v11)
-Pixel-level margin analysis across full rotations: 375px worst margin 65px, 1440px ≥116px; canvas matches host at 375/768/1440 and follows mid-session resizes (320→360 verified). Full rotation frames captured at all three widths — whole fruit, no clipping, centred, button and hairline uncrowded. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v12 — cherries drag + gallery autoplay)
+- Cherries spacing tightened (mt-12→mt-4 wrapper, gallery mt-12→mt-4/8) — deliberate ornament, same model size
+- Cherries draggable: pointer events (mouse/touch/pen), horizontal drag spins on Y, throw momentum with exponential ease-down blending smoothly into the auto loop (no snap), touch-action pan-y so vertical swipes always scroll the page, reduced-motion users static but draggable
+- Gallery autoplay: continuous ~30px/s drift via rAF, 3× duplicated photos with invisible ±setWidth teleport = seamless infinite loop both directions, pauses on hover/drag/wheel/arrow (1.5s grace), stops offscreen (IntersectionObserver) and for reduced-motion; scroll-snap removed (conflicts with drift)
+- Gallery now 5 photos: added g5.jpg + g3.jpg (same card size/crop; g2/g4 permanently excluded, g2 deleted from disk); arrows always visible (infinite strip); 15 rendered cards with unique testids
+
+## Verification done (v12)
+375px: autoplay drifts and stays bounded in the middle band (seamless wrap), cherries rotate on horizontal drag and page scrolls over them vertically, reduced-motion emulation (intro skipped, strip static, cherries static-but-draggable). 1440px: autoplay, hover pause + resume, backward drag past first card loops seamlessly, arrows and lightbox work. 768px: autoplay + spacing visual.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

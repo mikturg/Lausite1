@@ -10,23 +10,58 @@ const GALLERY = [
     { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
     { src: "/g6.jpg", alt: "Lauofgirly devant le miroir" },
     { src: "/g7.jpg", alt: "Sourire espiègle de Lauofgirly" },
+    { src: "/g5.jpg", alt: "Lauofgirly, miroir et sourire" },
+    { src: "/g3.jpg", alt: "Lauofgirly en blanc, espiègle" },
 ];
 
 function GalleryStrip({ onOpen }) {
     const stripRef = useRef(null);
-    const dragState = useRef({ startX: 0, scrollLeft: 0, moved: false });
+    const dragState = useRef({ startX: 0, scrollLeft: 0, moved: false, active: false });
+    const autoState = useRef({ hovering: false, pauseUntil: 0, visible: true });
     const [dragging, setDragging] = useState(false);
-    const [atStart, setAtStart] = useState(true);
-    const [atEnd, setAtEnd] = useState(false);
+    const draggingRef = useRef(false);
+
+    const PHOTOS = [...GALLERY, ...GALLERY, ...GALLERY];
 
     useEffect(() => {
         const el = stripRef.current;
         if (!el) return;
-        const updateEdges = () => {
-            setAtStart(el.scrollLeft <= 4);
-            setAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 4);
+        const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const setWidth = () => el.scrollWidth / 3;
+        el.scrollLeft = setWidth();
+
+        const wrap = () => {
+            const sw = setWidth();
+            if (el.scrollLeft >= sw * 2) {
+                el.scrollLeft -= sw;
+                if (dragState.current.active) dragState.current.scrollLeft -= sw;
+            } else if (el.scrollLeft < sw) {
+                el.scrollLeft += sw;
+                if (dragState.current.active) dragState.current.scrollLeft += sw;
+            }
         };
-        updateEdges();
+
+        let raf = 0;
+        let last = 0;
+        const SPEED = 30; // px per second, gentle drift
+        const tick = (now) => {
+            const dt = last ? now - last : 0;
+            last = now;
+            const a = autoState.current;
+            if (
+                !reduced &&
+                a.visible &&
+                !a.hovering &&
+                !draggingRef.current &&
+                now > a.pauseUntil
+            ) {
+                el.scrollLeft += (SPEED * dt) / 1000;
+            }
+            wrap();
+            raf = requestAnimationFrame(tick);
+        };
+        raf = requestAnimationFrame(tick);
+
         const onWheel = (e) => {
             if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return;
             const maxScroll = el.scrollWidth - el.clientWidth;
@@ -36,22 +71,44 @@ function GalleryStrip({ onOpen }) {
             ) {
                 e.preventDefault();
                 el.scrollLeft += e.deltaY;
+                autoState.current.pauseUntil = performance.now() + 1500;
             }
         };
-        el.addEventListener("scroll", updateEdges, { passive: true });
+        const onEnter = (e) => {
+            if (e.pointerType === "mouse") autoState.current.hovering = true;
+        };
+        const onLeave = () => {
+            autoState.current.hovering = false;
+        };
+        const io = new IntersectionObserver(([entry]) => {
+            autoState.current.visible = entry.isIntersecting;
+        });
+        io.observe(el);
+
         el.addEventListener("wheel", onWheel, { passive: false });
-        window.addEventListener("resize", updateEdges);
+        el.addEventListener("pointerenter", onEnter);
+        el.addEventListener("pointerleave", onLeave);
+        window.addEventListener("resize", wrap);
         return () => {
-            el.removeEventListener("scroll", updateEdges);
+            cancelAnimationFrame(raf);
+            io.disconnect();
             el.removeEventListener("wheel", onWheel);
-            window.removeEventListener("resize", updateEdges);
+            el.removeEventListener("pointerenter", onEnter);
+            el.removeEventListener("pointerleave", onLeave);
+            window.removeEventListener("resize", wrap);
         };
     }, []);
 
     const onPointerDown = (e) => {
         if (e.pointerType === "touch") return;
         const el = stripRef.current;
-        dragState.current = { startX: e.clientX, scrollLeft: el.scrollLeft, moved: false };
+        dragState.current = {
+            startX: e.clientX,
+            scrollLeft: el.scrollLeft,
+            moved: false,
+            active: true,
+        };
+        draggingRef.current = true;
         setDragging(true);
     };
 
@@ -62,7 +119,12 @@ function GalleryStrip({ onOpen }) {
             if (Math.abs(dx) > 6) dragState.current.moved = true;
             stripRef.current.scrollLeft = dragState.current.scrollLeft - dx;
         };
-        const onUp = () => setDragging(false);
+        const onUp = () => {
+            dragState.current.active = false;
+            draggingRef.current = false;
+            autoState.current.pauseUntil = performance.now() + 1500;
+            setDragging(false);
+        };
         window.addEventListener("pointermove", onMove);
         window.addEventListener("pointerup", onUp);
         return () => {
@@ -72,6 +134,7 @@ function GalleryStrip({ onOpen }) {
     }, [dragging]);
 
     const scrollByCard = (dir) => {
+        autoState.current.pauseUntil = performance.now() + 1500;
         stripRef.current?.scrollBy({ left: dir * 340, behavior: "smooth" });
     };
 
@@ -84,7 +147,7 @@ function GalleryStrip({ onOpen }) {
     };
 
     const arrowBase =
-        "absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#E8B96A]/60 bg-[#FFF4F7] text-[#4A2233] shadow-[0_6px_18px_rgba(74,34,51,0.12)] transition-opacity duration-200 hover:bg-[#F7CAD9] md:flex";
+        "absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#E8B96A]/60 bg-[#FFF4F7] text-[#4A2233] shadow-[0_6px_18px_rgba(74,34,51,0.12)] transition-colors duration-200 hover:bg-[#F7CAD9] md:flex";
 
     return (
         <div className="relative mx-auto mt-12 w-full max-w-md sm:max-w-xl lg:max-w-3xl">
@@ -92,7 +155,7 @@ function GalleryStrip({ onOpen }) {
                 data-testid="gallery-arrow-prev"
                 aria-label="Photos précédentes"
                 onClick={() => scrollByCard(-1)}
-                className={`${arrowBase} left-3 ${atStart ? "pointer-events-none opacity-0" : "opacity-100"}`}
+                className={`${arrowBase} left-3`}
             >
                 <ChevronLeft size={20} />
             </button>
@@ -100,26 +163,26 @@ function GalleryStrip({ onOpen }) {
                 data-testid="gallery-arrow-next"
                 aria-label="Photos suivantes"
                 onClick={() => scrollByCard(1)}
-                className={`${arrowBase} right-3 ${atEnd ? "pointer-events-none opacity-0" : "opacity-100"}`}
+                className={`${arrowBase} right-3`}
             >
                 <ChevronRight size={20} />
             </button>
             <div
                 ref={stripRef}
                 data-testid="gallery-strip"
-                className={`no-scrollbar flex snap-x snap-mandatory select-none gap-5 overflow-x-auto px-[7vw] sm:px-8 md:cursor-grab ${
+                className={`no-scrollbar flex select-none gap-5 overflow-x-auto px-[7vw] sm:px-8 md:cursor-grab ${
                     dragging ? "md:cursor-grabbing" : ""
                 }`}
-                style={dragging ? { scrollSnapType: "none" } : undefined}
                 onPointerDown={onPointerDown}
             >
-                {GALLERY.map((photo, i) => (
+                {PHOTOS.map((photo, i) => (
                     <button
-                        key={photo.src}
+                        key={`${photo.src}-${i}`}
                         data-testid={`gallery-item-${i + 1}`}
                         className="strip-card aspect-[3/4] w-[72vw] sm:w-[320px]"
                         onClick={() => handleCardClick(photo)}
                         aria-label={`Agrandir : ${photo.alt}`}
+                        tabIndex={-1}
                     >
                         <img src={photo.src} alt={photo.alt} loading="lazy" draggable={false} />
                     </button>
@@ -360,13 +423,13 @@ export default function App() {
                 </div>
 
                 {/* Cherries ornament — centred between the first button and the gallery */}
-                <div className="mt-12 flex w-full justify-center lg:mt-10">
+                <div className="mt-4 flex w-full justify-center lg:mt-4">
                     <CherriesCharm className="h-[320px] w-[320px] md:h-[360px] md:w-[360px] lg:h-[420px] lg:w-[420px]" />
                 </div>
 
                 {/* Gallery — horizontal strip */}
                 <section
-                    className="relative mt-12 w-full overflow-hidden lg:mt-16"
+                    className="relative mt-4 w-full overflow-hidden lg:mt-8"
                     aria-label="Galerie de photos"
                 >
                     <img

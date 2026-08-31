@@ -62,10 +62,22 @@ export default function CherriesCharm({ className = "" }) {
                 let running = false;
                 let angle = 0;
                 let last = 0;
+                let vel = 0;
+                let isDragging = false;
+                let lastX = 0;
+                let lastMoveT = 0;
+                const AUTO = (Math.PI * 2) / 9000;
+                const DRAG_K = 0.009;
+
                 const render = () => renderer.render(scene, camera);
                 const loop = (now) => {
-                    if (last) angle += ((now - last) / 9000) * Math.PI * 2;
+                    const dt = last ? now - last : 0;
                     last = now;
+                    if (!isDragging && !reduced) {
+                        // throw momentum eases down, then blends into the auto loop
+                        vel += (AUTO - vel) * Math.min(1, dt / 600);
+                        angle += vel * dt;
+                    }
                     pivot.rotation.y = angle;
                     render();
                     raf = requestAnimationFrame(loop);
@@ -80,6 +92,41 @@ export default function CherriesCharm({ className = "" }) {
                         cancelAnimationFrame(raf);
                     }
                 };
+
+                // Drag to spin: pointer events cover mouse, touch and pen.
+                // touch-action: pan-y keeps vertical swipes scrolling the page.
+                host.style.touchAction = "pan-y";
+                host.style.cursor = "grab";
+                const onDown = (e) => {
+                    isDragging = true;
+                    lastX = e.clientX;
+                    lastMoveT = performance.now();
+                    vel = 0;
+                    host.style.cursor = "grabbing";
+                    host.setPointerCapture(e.pointerId);
+                };
+                const onMove = (e) => {
+                    if (!isDragging) return;
+                    const now = performance.now();
+                    const dx = e.clientX - lastX;
+                    const dt = now - lastMoveT || 16;
+                    lastX = e.clientX;
+                    lastMoveT = now;
+                    const delta = dx * DRAG_K;
+                    angle += delta;
+                    vel = vel * 0.75 + (delta / dt) * 0.25;
+                    pivot.rotation.y = angle;
+                    if (reduced) render();
+                };
+                const onUp = () => {
+                    isDragging = false;
+                    host.style.cursor = "grab";
+                };
+                host.addEventListener("pointerdown", onDown);
+                host.addEventListener("pointermove", onMove);
+                host.addEventListener("pointerup", onUp);
+                host.addEventListener("pointercancel", onUp);
+
                 const io = new IntersectionObserver(([entry]) =>
                     setRunning(!reduced && entry.isIntersecting)
                 );
@@ -100,6 +147,10 @@ export default function CherriesCharm({ className = "" }) {
                     io.disconnect();
                     ro.disconnect();
                     cancelAnimationFrame(raf);
+                    host.removeEventListener("pointerdown", onDown);
+                    host.removeEventListener("pointermove", onMove);
+                    host.removeEventListener("pointerup", onUp);
+                    host.removeEventListener("pointercancel", onUp);
                     renderer.dispose();
                     renderer.domElement.remove();
                 };
