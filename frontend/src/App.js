@@ -1,17 +1,15 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import "@/App.css";
+import NAME_PATHS from "@/namePaths.json";
 
 const PRIMARY_URL = "PRIMARY_URL_PLACEHOLDER";
 const INTRO_KEY = "lauofgirly_intro_seen";
 
 const GALLERY = [
-    { src: "/g1.jpg", alt: "Portrait doux de Lauofgirly", span: "col-span-2 row-span-2" },
-    { src: "/g2.jpg", alt: "Lauofgirly en rose poudré", span: "col-span-1 row-span-1" },
-    { src: "/g3.jpg", alt: "Regard espiègle de Lauofgirly", span: "col-span-1 row-span-1" },
-    { src: "/g4.jpg", alt: "Lauofgirly, moment coquet", span: "col-span-1 row-span-2" },
-    { src: "/g5.jpg", alt: "Sourire de Lauofgirly", span: "col-span-1 row-span-1" },
-    { src: "/g6.jpg", alt: "Lauofgirly en lumière douce", span: "col-span-1 row-span-1" },
-    { src: "/g7.jpg", alt: "Lauofgirly, grande évasion rose", span: "col-span-2 row-span-1" },
+    { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
+    { src: "/g6.jpg", alt: "Lauofgirly devant le miroir" },
+    { src: "/g7.jpg", alt: "Sourire espiègle de Lauofgirly" },
+    { src: "/g2.jpg", alt: "Lauofgirly en rose poudré" },
 ];
 
 function CtaButton({ testId }) {
@@ -30,9 +28,56 @@ function CtaButton({ testId }) {
             rel="noopener noreferrer"
             onClick={handleClick}
         >
-            <img src="/bisou-rose.png" alt="" aria-hidden="true" className="cta-kiss" />
             <span>Viens voir</span>
         </a>
+    );
+}
+
+const WRITE_START_MS = 950;
+const WRITE_WINDOW_MS = 1250;
+
+function HandwrittenName() {
+    const svgRef = useRef(null);
+
+    useEffect(() => {
+        const svg = svgRef.current;
+        if (!svg) return;
+        const paths = Array.from(svg.querySelectorAll("path"));
+        const lengths = paths.map((p) => p.getTotalLength());
+        const total = lengths.reduce((a, b) => a + b, 0);
+        paths.forEach((p, i) => {
+            p.style.strokeDasharray = `${lengths[i]}`;
+            p.style.strokeDashoffset = `${lengths[i]}`;
+        });
+        const raf = requestAnimationFrame(() =>
+            requestAnimationFrame(() => {
+                let acc = 0;
+                paths.forEach((p, i) => {
+                    const dur = Math.max(90, (WRITE_WINDOW_MS * lengths[i]) / total);
+                    const delay = WRITE_START_MS + acc;
+                    acc += dur;
+                    p.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(0.55, 0, 0.35, 1) ${delay}ms, fill-opacity 380ms ease ${WRITE_START_MS + WRITE_WINDOW_MS}ms`;
+                    p.style.strokeDashoffset = "0";
+                    p.style.fillOpacity = "1";
+                });
+            })
+        );
+        return () => cancelAnimationFrame(raf);
+    }, []);
+
+    return (
+        <svg
+            ref={svgRef}
+            data-testid="intro-name-svg"
+            className="intro-name-svg"
+            viewBox={NAME_PATHS.viewBox}
+            role="img"
+            aria-label="Lauofgirly"
+        >
+            {NAME_PATHS.paths.map((d, i) => (
+                <path key={i} d={d} strokeWidth={NAME_PATHS.strokeWidth} />
+            ))}
+        </svg>
     );
 }
 
@@ -52,8 +97,8 @@ function Intro({ onDone }) {
 
     useEffect(() => {
         timers.current = [
-            setTimeout(() => setFading(true), 2300),
-            setTimeout(finish, 2850),
+            setTimeout(() => setFading(true), 2550),
+            setTimeout(finish, 2950),
         ];
         return () => timers.current.forEach(clearTimeout);
     }, [finish]);
@@ -67,7 +112,7 @@ function Intro({ onDone }) {
             aria-label="Passer l'introduction"
         >
             <img src="/bisou-rose.png" alt="" aria-hidden="true" className="intro-kiss" />
-            <span className="intro-name font-script">Lauofgirly</span>
+            <HandwrittenName />
         </div>
     );
 }
@@ -129,57 +174,60 @@ export default function App() {
         >
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
 
-            <main className="mx-auto flex min-h-screen w-full max-w-md flex-col items-center px-5 pb-10 pt-8 sm:max-w-lg">
-                {/* Hero */}
-                <div
-                    data-testid="hero-portrait"
-                    className="relative w-full overflow-hidden rounded-[2.2rem] border border-[#E8B96A]/40 shadow-[0_20px_50px_rgba(74,34,51,0.16)]"
-                >
+            <main className="flex min-h-screen w-full flex-col">
+                {/* Hero — full bleed */}
+                <header data-testid="hero-portrait" className="relative w-full">
                     <img
                         src="/hero.jpg"
                         alt="Portrait de Lauofgirly"
-                        className="aspect-[4/5] w-full object-cover"
+                        className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] sm:h-[88svh] lg:h-[94svh] lg:object-[center_12%]"
                         loading="eager"
                     />
-                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-t from-[#4A2233]/55 via-[#4A2233]/15 to-transparent" />
-                    <h1 className="hero-name font-script absolute inset-x-0 bottom-4 text-center text-6xl text-[#FFF4F7]">
+                    <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7]" />
+                    <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] sm:text-8xl">
                         Lauofgirly
                     </h1>
+                </header>
+
+                {/* Tagline + first CTA */}
+                <div className="mx-auto flex w-full max-w-md flex-col items-center px-6">
+                    <p
+                        data-testid="tagline"
+                        className="mt-16 max-w-xs text-center text-base font-medium leading-relaxed text-[#4A2233]/80"
+                    >
+                        Ton plus joli détour du jour, rien que pour toi.
+                    </p>
+                    <div className="mt-10 w-full max-w-xs">
+                        <CtaButton testId="cta-button-primary" />
+                    </div>
                 </div>
 
-                {/* Tagline */}
-                <p
-                    data-testid="tagline"
-                    className="mb-7 mt-6 max-w-xs text-center text-base font-medium leading-relaxed text-[#4A2233]/80"
+                {/* Gallery — horizontal strip */}
+                <section
+                    className="relative mt-32 w-full overflow-hidden"
+                    aria-label="Galerie de photos"
                 >
-                    Ton plus joli détour du jour, rien que pour toi.
-                </p>
-
-                {/* Primary CTA */}
-                <div className="w-full max-w-xs">
-                    <CtaButton testId="cta-button-primary" />
-                </div>
-
-                {/* Gallery */}
-                <section className="relative mt-12 w-full" aria-label="Galerie de photos">
                     <img
                         src="/bisou-rose.png"
                         alt=""
                         aria-hidden="true"
-                        className="kiss-motif"
+                        className="kiss-watermark"
                     />
-                    <p className="mb-4 text-center text-xs font-bold uppercase tracking-[0.25em] text-[#E8B96A]">
-                        Un aperçu de mon monde
-                    </p>
+                    <div className="relative mx-auto flex w-full max-w-md flex-col items-center px-6">
+                        <div className="hairline" />
+                        <p className="section-label mt-6 text-center">
+                            Un aperçu de mon monde
+                        </p>
+                    </div>
                     <div
-                        data-testid="gallery-grid"
-                        className="grid w-full auto-rows-[150px] grid-cols-2 gap-3 sm:auto-rows-[190px]"
+                        data-testid="gallery-strip"
+                        className="no-scrollbar relative mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-[7vw] sm:px-8"
                     >
                         {GALLERY.map((photo, i) => (
                             <button
                                 key={photo.src}
                                 data-testid={`gallery-item-${i + 1}`}
-                                className={`gallery-item ${photo.span}`}
+                                className="strip-card aspect-[3/4] w-[72vw] sm:w-[320px]"
                                 onClick={() => setLightboxPhoto(photo)}
                                 aria-label={`Agrandir : ${photo.alt}`}
                             >
@@ -187,20 +235,31 @@ export default function App() {
                             </button>
                         ))}
                     </div>
+                    <div className="relative mx-auto mt-8 w-full max-w-md px-6">
+                        <img
+                            src="/bisou-rose.png"
+                            alt=""
+                            aria-hidden="true"
+                            className="kiss-corner ml-auto"
+                        />
+                    </div>
                 </section>
 
                 {/* Repeated CTA */}
-                <div className="mt-12 w-full max-w-xs">
+                <div className="mx-auto mt-32 w-full max-w-xs px-6">
                     <CtaButton testId="cta-button-secondary" />
                 </div>
 
                 {/* Footer */}
                 <footer
                     data-testid="footer"
-                    className="mt-12 flex w-full flex-col items-center gap-2 border-t border-[#E8B96A]/40 pt-6"
+                    className="mx-auto mt-28 flex w-full max-w-md flex-col items-center px-6 pb-12"
                 >
-                    <span className="font-script text-2xl text-[#4A2233]/80">Lauofgirly</span>
-                    <p className="text-xs text-[#4A2233]/60">
+                    <div className="hairline" />
+                    <span className="font-script mt-10 text-3xl text-[#4A2233]/80">
+                        Lauofgirly
+                    </span>
+                    <p className="mt-3 text-xs text-[#4A2233]/55">
                         © 2026 Lauofgirly · Tout doux, tout rose
                     </p>
                 </footer>
