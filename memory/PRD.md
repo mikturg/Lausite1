@@ -35,8 +35,15 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Desktop hero rework: whole block centred as one unit capped at 1100px with normal gap; portrait larger (74svh, natural proportion); name/tagline/button left-aligned as a group, vertically centred against the image; cream gradient fades on right/left/bottom image edges; generous vertical breathing room
 - Bug found + fixed during verification: pointer capture was swallowing card clicks (lightbox wouldn't open) — replaced with window-listener drag
 
-## Verification done (v4)
-Intro fresh-session at 1440px: plays and completes. Desktop gallery: arrows advance strip (0→488), drag works (no lightbox on drag), wheel works both directions, plain click opens lightbox. Mobile 375px: hero unchanged, arrows hidden, strip scrolls, tap opens lightbox. Hero verified at 1024/1280/1440px — face never cut, block centred.
+## Implemented (July 2026, v5 — intro replay + desktop investigation)
+- Investigation (1440px fresh session, instrumented): intro mounts, is fully visible (fixed/z-60/opacity 1/full viewport), no viewport/touch/width gating anywhere, skip does not auto-fire, SVG dashoffset animates at desktop dimensions. Only remaining gate: prefers-reduced-motion — the likely cause on the reporter's desktop OS (Windows animation effects / macOS Reduce Motion / Linux DEs report `reduce`; incognito does not reset OS settings)
+- Intro now plays on EVERY page load: sessionStorage flag fully removed; refresh, new tab, return visit and back-navigation all replay the full sequence
+- Skip now works via click, tap AND any keypress; skipping affects only that visit
+- Page behind the intro is inert + aria-hidden until the intro finishes
+- Kiss press animation tightened to 0.6s per spec
+
+## Verification done (v5)
+1440px: full sequence watched (mid-write "Lauofgir" captured), then 3 refreshes — replayed every time; keypress skips; next load replays after skip. 375px: same replay ×3, tap skips, replays after skip. Identical timing/visuals both widths. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

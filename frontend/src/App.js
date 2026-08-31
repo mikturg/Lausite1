@@ -4,7 +4,6 @@ import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
 const PRIMARY_URL = "PRIMARY_URL_PLACEHOLDER";
-const INTRO_KEY = "lauofgirly_intro_seen";
 
 const GALLERY = [
     { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
@@ -204,7 +203,6 @@ function Intro({ onDone }) {
     const timers = useRef([]);
 
     const finish = useCallback(() => {
-        sessionStorage.setItem(INTRO_KEY, "1");
         onDone();
     }, [onDone]);
 
@@ -214,12 +212,17 @@ function Intro({ onDone }) {
     }, [finish]);
 
     useEffect(() => {
+        const onKey = () => skip();
+        window.addEventListener("keydown", onKey);
         timers.current = [
             setTimeout(() => setFading(true), 3150),
             setTimeout(finish, 3650),
         ];
-        return () => timers.current.forEach(clearTimeout);
-    }, [finish]);
+        return () => {
+            window.removeEventListener("keydown", onKey);
+            timers.current.forEach(clearTimeout);
+        };
+    }, [finish, skip]);
 
     return (
         <div
@@ -279,8 +282,7 @@ export default function App() {
 
     useEffect(() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-        const seen = sessionStorage.getItem(INTRO_KEY);
-        if (!reduced && !seen) {
+        if (!reduced) {
             setShowIntro(true);
         }
     }, []);
@@ -292,7 +294,11 @@ export default function App() {
         >
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
 
-            <main className="flex min-h-screen w-full flex-col">
+            <main
+                inert={showIntro}
+                aria-hidden={showIntro}
+                className="flex min-h-screen w-full flex-col"
+            >
                 {/* Hero — full bleed on mobile, contained on larger screens */}
                 <header
                     data-testid="hero-portrait"
