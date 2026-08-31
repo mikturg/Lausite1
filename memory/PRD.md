@@ -57,8 +57,16 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Mobile: block spans with whitespace-nowrap, full-viewport-width container, 13px (reduced from 16px per user's "reduce rather than wrap" rule), leading 1.9; verified single-line at 375px AND 360px
 - Desktop: same two lines, text-lg, max-w-md, left-aligned group unchanged
 
-## Verification done (v8)
-375px + 360px: both lines on their own single line, no clipping, no horizontal page overflow. 1440px: lines 423px wide within max-w-md, left-aligned under the script name.
+## Implemented (July 2026, v9 — 3D cherries charm)
+- cherries.glb (2.6MB, as-is) in frontend/public, rendered via dynamically-imported three.js (`src/components/CherriesCharm.js`): transparent canvas, no frame, warm hemisphere + directional lighting, auto-normalized scale/centering
+- Slow 360° Y rotation (~9s/turn), IntersectionObserver pauses the loop offscreen, prefers-reduced-motion renders a static frame, WebGL/model failure fails silently to empty space
+- Lazy: dynamic import after mount, fixed-size host div reserves space (zero layout shift, no spinner), page fully usable before load
+- Placement: absolute-anchored to an inline-block span wrapping the script name — beside the "y", offset upward over the photo fade on mobile (92px / 112px md), equivalent spot in the desktop text column (124px / 140px xl)
+- Footer attribution line (licence-required): "Cherries by siotech2011, licensed under CC BY 4.0" with both links, muted 10px style
+- "Viens voir" button placement untouched
+
+## Verification done (v9)
+375/768/1440: canvas mounts, rotation confirmed (leaf position differs between frames 1.5s apart), no overlap of letters/tagline/button at any width, hero usable immediately after intro skip while model still loads, footer attribution text present. Mobile placement nudged 8px up after first pass showed the cherry grazing the "y" curl.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

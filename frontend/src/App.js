@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import CherriesCharm from "@/components/CherriesCharm";
 import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
@@ -315,13 +316,19 @@ export default function App() {
                             <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/4 bg-gradient-to-l from-[#FFF4F7] to-transparent lg:block" />
                             <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-[#FFF4F7]/80 to-transparent lg:block" />
                             <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
-                                Lauofgirly
+                                <span className="relative inline-block">
+                                    Lauofgirly
+                                    <CherriesCharm className="pointer-events-none absolute -right-5 -top-16 h-[92px] w-[92px] md:-right-8 md:-top-20 md:h-[112px] md:w-[112px]" />
+                                </span>
                             </h1>
                         </div>
                     </div>
                     <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
-                        <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
-                            Lauofgirly
+                        <h1 className="font-script relative text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
+                            <span className="relative inline-block">
+                                Lauofgirly
+                                <CherriesCharm className="pointer-events-none absolute -right-24 -top-12 h-[124px] w-[124px] xl:-right-32 xl:h-[140px] xl:w-[140px]" />
+                            </span>
                         </h1>
                         <p
                             data-testid="tagline-desktop"
@@ -394,6 +401,29 @@ export default function App() {
                     </span>
                     <p className="mt-3 text-xs text-[#4A2233]/55">
                         © 2026 Lauofgirly · Tout doux, tout rose
+                    </p>
+                    <p
+                        data-testid="cherries-attribution"
+                        className="mt-2 text-[10px] leading-relaxed text-[#4A2233]/45"
+                    >
+                        Cherries by{" "}
+                        <a
+                            href="https://sketchfab.com/siotech2011"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-[#E8B96A]/60 underline-offset-2 hover:text-[#4A2233]/70"
+                        >
+                            siotech2011
+                        </a>
+                        , licensed under{" "}
+                        <a
+                            href="https://creativecommons.org/licenses/by/4.0/"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline decoration-[#E8B96A]/60 underline-offset-2 hover:text-[#4A2233]/70"
+                        >
+                            CC BY 4.0
+                        </a>
                     </p>
                 </footer>
             </main>
