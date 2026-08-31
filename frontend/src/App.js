@@ -360,13 +360,13 @@ export default function App() {
                 </div>
 
                 {/* Cherries ornament — centred between the first button and the gallery */}
-                <div className="mt-16 flex w-full justify-center lg:mt-12">
-                    <CherriesCharm className="h-[120px] w-[120px] md:h-[136px] md:w-[136px] lg:h-[150px] lg:w-[150px]" />
+                <div className="mt-12 flex w-full justify-center lg:mt-10">
+                    <CherriesCharm className="h-[320px] w-[320px] md:h-[360px] md:w-[360px] lg:h-[420px] lg:w-[420px]" />
                 </div>
 
                 {/* Gallery — horizontal strip */}
                 <section
-                    className="relative mt-16 w-full overflow-hidden lg:mt-20"
+                    className="relative mt-12 w-full overflow-hidden lg:mt-16"
                     aria-label="Galerie de photos"
                 >
                     <img

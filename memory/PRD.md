@@ -70,8 +70,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Charm moved out of the name area: now page-centred below the first "Viens voir" button (single shared placement after the mobile CTA block / after the hero on desktop), 120px mobile / 136px md / 150px lg, gallery top margin tightened (mt-32 → mt-16/20) to absorb the added height
 - Name spans reverted to plain text; no charm near the name anywhere
 
-## Verification done (v10)
-Full rotation watched at 375/768/1440 (4 frames spanning ~9.6s each): cherries whole at every angle, leaf and stems never clipped. Charm box confirmed page-centred (left 645 + w150 = centre 720/1440). No overlap with button, name, tagline or gallery at any width. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v11 — cherries size-up + real clipping root cause)
+- TRUE root cause of clipping/off-centre (found via live instrumentation): canvas sized once at mount and never resized — when the viewport changed after load (or mount happened at a different breakpoint), the oversized canvas overflowed its box top-left, shifting the model bottom-right and cutting it at the edge. Fixed with a ResizeObserver keeping renderer size matched to the host div
+- Camera fit now: pivot-wrapper centring (immune to the GLB's baked node transforms) + bounding-sphere fit with padding tuned from measured silhouette sweep (1.05 → worst margin 65px at every angle)
+- Size tripled: canvas 320px mobile / 360px md / 420px lg; fruit renders ~175px wide on mobile (vs ~55px before); surrounding spacing tightened (mt-12) to absorb height
+
+## Verification done (v11)
+Pixel-level margin analysis across full rotations: 375px worst margin 65px, 1440px ≥116px; canvas matches host at 375/768/1440 and follows mid-session resizes (320→360 verified). Full rotation frames captured at all three widths — whole fruit, no clipping, centred, button and hairline uncrowded. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

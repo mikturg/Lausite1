@@ -38,19 +38,23 @@ export default function CherriesCharm({ className = "" }) {
                     return;
                 }
 
-                const group = gltf.scene;
-                const box = new THREE.Box3().setFromObject(group);
+                // Wrap in an identity pivot: recentre the model inside it by pure
+                // translation, then scale/rotate only the pivot, so the model's own
+                // baked transforms can't shift it off the rotation axis.
+                const inner = gltf.scene;
+                const pivot = new THREE.Group();
+                pivot.add(inner);
+                const box = new THREE.Box3().setFromObject(pivot);
                 const sphere = box.getBoundingSphere(new THREE.Sphere());
-                const scale = 1 / (sphere.radius || 1);
-                group.scale.setScalar(scale);
-                group.position.sub(sphere.center.clone().multiplyScalar(scale));
-                scene.add(group);
+                inner.position.sub(sphere.center);
+                pivot.scale.setScalar(1 / (sphere.radius || 1));
+                scene.add(pivot);
 
                 // Fit the full bounding sphere with padding so the silhouette
                 // stays inside the frustum at every rotation angle.
                 const fitDistance =
                     1 / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
-                camera.position.set(0, 0, fitDistance * 1.22);
+                camera.position.set(0, 0, fitDistance * 1.05);
                 camera.lookAt(0, 0, 0);
                 host.appendChild(renderer.domElement);
 
@@ -62,7 +66,7 @@ export default function CherriesCharm({ className = "" }) {
                 const loop = (now) => {
                     if (last) angle += ((now - last) / 9000) * Math.PI * 2;
                     last = now;
-                    group.rotation.y = angle;
+                    pivot.rotation.y = angle;
                     render();
                     raf = requestAnimationFrame(loop);
                 };
@@ -80,10 +84,21 @@ export default function CherriesCharm({ className = "" }) {
                     setRunning(!reduced && entry.isIntersecting)
                 );
                 io.observe(host);
-                render();
+
+                // Keep the canvas matched to its box: it must never overflow
+                // (viewport resizes, orientation changes, late layout).
+                const applySize = () => {
+                    const s = host.clientWidth || 100;
+                    renderer.setSize(s, s);
+                    render();
+                };
+                const ro = new ResizeObserver(applySize);
+                ro.observe(host);
+                applySize();
 
                 cleanup = () => {
                     io.disconnect();
+                    ro.disconnect();
                     cancelAnimationFrame(raf);
                     renderer.dispose();
                     renderer.domElement.remove();
