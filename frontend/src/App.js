@@ -149,8 +149,8 @@ function CtaButton({ testId }) {
     );
 }
 
-const WRITE_START_MS = 950;
-const WRITE_WINDOW_MS = 1800;
+const WRITE_START_MS = 1700;
+const WRITE_WINDOW_MS = 2600;
 
 function HandwrittenName() {
     const svgRef = useRef(null);
@@ -172,7 +172,7 @@ function HandwrittenName() {
                     const dur = Math.max(90, (WRITE_WINDOW_MS * lengths[i]) / total);
                     const delay = WRITE_START_MS + acc;
                     acc += dur;
-                    p.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(0.55, 0, 0.35, 1) ${delay}ms, fill-opacity 380ms ease ${WRITE_START_MS + WRITE_WINDOW_MS}ms`;
+                    p.style.transition = `stroke-dashoffset ${dur}ms cubic-bezier(0.45, 0, 0.25, 1) ${delay}ms, fill-opacity 400ms ease ${WRITE_START_MS + WRITE_WINDOW_MS}ms`;
                     p.style.strokeDashoffset = "0";
                     p.style.fillOpacity = "1";
                 });
@@ -214,8 +214,8 @@ function Intro({ onDone }) {
         const onKey = () => skip();
         window.addEventListener("keydown", onKey);
         timers.current = [
-            setTimeout(() => setFading(true), 3150),
-            setTimeout(finish, 3650),
+            setTimeout(() => setFading(true), 5000),
+            setTimeout(finish, 5600),
         ];
         return () => {
             window.removeEventListener("keydown", onKey);

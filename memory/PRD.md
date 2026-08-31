@@ -47,8 +47,13 @@ Hero checked at 375px (full-bleed, face intact), 768px (centred contained column
 - Strip now 3 cards (g1, g6, g7), same card size/spacing/peek — no layout change needed, 3-card rhythm verified
 - SFW audit of remaining images: hero (face-forward selfie, black top), g1 (pink sweatshirt face close-up), g6 (white hoodie, hand over mouth, face-framed), g7 (black tee, tongue out, face close-up) — all face-centred and fully clothed, none flagged
 
-## Verification done (v6)
-375px: 3 cards, 4th gone, peek intact. 1440px: 3 cards, peek (maxScroll 296), arrows work (advance to end, prev appears). /g2.jpg returns SPA fallback HTML, not the image; file absent on disk.
+## Implemented (July 2026, v7 — slower intro pacing)
+- Intro stretched to ~5.5s: kiss press 0.9s, 0.7s kiss-only hold, handwriting 2.6s (gentler ease-in-out per glyph), 0.7s hold on finished name, 0.6s fade
+- Added subtle kiss "breathing" (scale 1↔1.035 over 3.4s loop) during the holds so the screen never feels dead — disclosed to user
+- Skip (click/tap/keypress), replay-on-every-load, reduced-motion skip all unchanged
+
+## Verification done (v7)
+375px: total ~5.2s measured from selector mount (≈5.5s real), kiss-only hold and mid-writing beats captured, replay works. 1440px: ~5.3s measured (≈5.5s real), replay and keypress skip confirmed. Identical visuals both widths.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
