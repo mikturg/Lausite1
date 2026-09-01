@@ -114,8 +114,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - REAL BUG FIXED: grain replaced with a bundled PNG noise texture (src/grain.png, 128px tile — absolute /public URLs break css-loader compilation, lesson recorded)
 - Intensities raised per "overshoot" instruction: grain opacity 0.22 (measured 5.8× texture over baseline), gradient washes alpha ~0.8 with ±4% drift on 22s cycle, reveals rise 36px over 1.1s, watermarks opacity 0.15 (identifiable kiss + cherry), hairline draw 1.4s, shimmer alpha 0.55, parallax factor 0.12 cap 48px
 
-## Verification done (v18)
-Per-effect proof: grain patch stddev 10.92 vs 1.89 off (was 1.61 vs 1.5 before fix = invisible); shimmer frame deltas 12/5.6/6; gradient wash shift measured over 10s; parallax none→translate3d(0,48px,0) at scrollY 400; reveal mid-fade captured; watermark kiss identifiable in screenshots at 375/1440. Full-page screenshots confirm visible atmosphere at both widths.
+## Implemented (July 2026, v19 — grain removed entirely)
+- Film grain fully deleted: overlay element, .grain-overlay CSS rule, stale comment, and the src/grain.png texture file. Zero "grain" references remain in src/
+- Stacking audit: grain was one of several independently z-indexed background layers (all z-0); its removal changes nothing else — content still layers above via main z-[1]; gradient/vignette/bokeh/marks/glows confirmed intact
+- Recorded lesson: absolute /public URLs break css-loader — bundle assets via src/
+
+## Verification done (v19)
+375px + 1440px: grain element null in DOM, page renders with all other atmosphere intact (washes, vignette, bokeh, marks, glows), photos crisp, text sharp, no stacking gap. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

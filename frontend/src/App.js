@@ -409,9 +409,16 @@ export default function App() {
         >
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
 
-            {/* Atmosphere layers */}
+            {/* Atmosphere layers — all behind the content */}
             <div className="gradient-drift" aria-hidden="true" />
-            <div className="grain-overlay" aria-hidden="true" />
+            <div className="vignette-overlay" aria-hidden="true" />
+            <div className="bokeh-layer" aria-hidden="true">
+                <span className="bokeh" style={{ width: 320, height: 320, left: "6%", top: "12%", animationDuration: "24s" }} />
+                <span className="bokeh" style={{ width: 240, height: 240, left: "70%", top: "34%", animationDuration: "31s", animationDelay: "-9s" }} />
+                <span className="bokeh" style={{ width: 280, height: 280, left: "12%", top: "58%", animationDuration: "27s", animationDelay: "-16s" }} />
+                <span className="bokeh" style={{ width: 200, height: 200, left: "78%", top: "70%", animationDuration: "21s", animationDelay: "-5s" }} />
+                <span className="bokeh" style={{ width: 340, height: 340, left: "42%", top: "86%", animationDuration: "35s", animationDelay: "-22s" }} />
+            </div>
             <img
                 src="/bisou-rose.png"
                 alt=""
@@ -448,8 +455,9 @@ export default function App() {
                 <header
                     data-testid="hero-portrait"
                     data-reveal
-                    className="lg:mx-auto lg:flex lg:w-full lg:max-w-[1100px] lg:items-end lg:justify-center lg:gap-20 lg:px-10 lg:pt-20"
+                    className="relative lg:mx-auto lg:flex lg:w-full lg:max-w-[1100px] lg:items-end lg:justify-center lg:gap-20 lg:px-10 lg:pt-20"
                 >
+                    <div className="hero-glow" aria-hidden="true" />
                     <div
                         ref={heroImgColRef}
                         className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0"
