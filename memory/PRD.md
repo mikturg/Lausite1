@@ -101,8 +101,16 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Single shared spacing constant CHERRY_GAP (mt-5 lg:mt-6) governs both gaps around the cherries — they can't drift apart; strip's own mt-12 removed
 - Desktop hero: dropped min-h-100svh and bottom padding, text column now bottom-aligns with the image so the charm sits exactly one gap under the desktop button too (right column is no longer vertically centred — required for equal gaps)
 
-## Verification done (v16)
-Measured gaps: 375px 19/20, 768px 19/20, 1440px 24/24 (from the actual button). Label + hairline confirmed gone. Rotation margins at 375px: worst 66px — no clipping at any angle. Desktop hero visually intact with bottom-aligned name/tagline/button.
+## Implemented (July 2026, v17 — outro text block + decorative polish)
+- Second pink pill removed. Outro section after the strip: script heading "Un aperçu de mon monde", two-line copy, and SECOND_SITE_URL text link (plum, gold underline draws in on hover, placeholder-inert, constant next to PRIMARY_URL at top of App.js). Top pink button unchanged
+- Atmosphere layer: film-grain SVG overlay (5% multiply, static), 26s drifting radial-gradient wash, sparse pale kiss/cherry watermark marks drifting slowly (clipped at page edges, behind content)
+- Scroll reveals via one IntersectionObserver over [data-reveal] (fade+rise 16px, staggered transition-delays, once-only); footer hairline draws in via scaleX variant
+- Hero portrait parallax: transform-only lag max 22px, rAF-throttled scroll listener, reduced-motion gated
+- Refined hover/tap: soft springy easing on cards, button brightness, lightbox close, arrows
+- All animation transform/opacity only; reduced-motion gets full styling with zero movement
+
+## Verification done (v17)
+375/768/1440: second pill gone, outro renders and staggers in, text link inert with placeholder + underline draws on hover, no horizontal overflow, parallax transform confirmed, hairline draws, marks subtle, grain present. Reduced-motion: everything visible and static.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

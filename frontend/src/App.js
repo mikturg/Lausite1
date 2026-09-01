@@ -5,6 +5,7 @@ import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
 const PRIMARY_URL = "PRIMARY_URL_PLACEHOLDER";
+const SECOND_SITE_URL = "SECOND_SITE_URL_PLACEHOLDER";
 
 const GALLERY = [
     { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
@@ -355,6 +356,7 @@ function Lightbox({ photo, onClose }) {
 export default function App() {
     const [showIntro, setShowIntro] = useState(false);
     const [lightboxPhoto, setLightboxPhoto] = useState(null);
+    const heroImgColRef = useRef(null);
 
     useEffect(() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -363,24 +365,95 @@ export default function App() {
         }
     }, []);
 
+    // Scroll reveals: each marked section fades/rises once, then stays
+    useEffect(() => {
+        const els = Array.from(document.querySelectorAll("[data-reveal]"));
+        const io = new IntersectionObserver(
+            (entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("revealed");
+                        io.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.12 }
+        );
+        els.forEach((el) => io.observe(el));
+        return () => io.disconnect();
+    }, []);
+
+    // Gentle parallax: the portrait lags the page by a few pixels
+    useEffect(() => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const el = heroImgColRef.current;
+        if (!el) return;
+        let raf = 0;
+        const onScroll = () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.07, 22)}px, 0)`;
+            });
+        };
+        window.addEventListener("scroll", onScroll, { passive: true });
+        return () => {
+            window.removeEventListener("scroll", onScroll);
+            cancelAnimationFrame(raf);
+        };
+    }, []);
+
     return (
         <div
             data-testid="lauofgirly-page"
-            className="min-h-screen bg-[#FFF4F7] text-[#4A2233] selection:bg-[#F7CAD9]"
+            className="relative min-h-screen overflow-x-clip bg-[#FFF4F7] text-[#4A2233] selection:bg-[#F7CAD9]"
         >
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
+
+            {/* Atmosphere layers */}
+            <div className="gradient-drift" aria-hidden="true" />
+            <div className="grain-overlay" aria-hidden="true" />
+            <img
+                src="/bisou-rose.png"
+                alt=""
+                aria-hidden="true"
+                className="bg-mark left-[-3.5rem] top-[16%] w-52"
+                style={{ "--rot": "14deg" }}
+            />
+            <svg
+                aria-hidden="true"
+                className="bg-mark right-[-2.5rem] top-[52%] w-40"
+                style={{ "--rot": "-8deg", animationDelay: "-8s" }}
+                viewBox="0 0 100 100"
+            >
+                <circle cx="38" cy="68" r="20" fill="#4A2233" />
+                <circle cx="64" cy="72" r="17" fill="#4A2233" />
+                <path d="M40 56 C46 32 58 20 74 12" stroke="#4A2233" strokeWidth="4" fill="none" strokeLinecap="round" />
+                <path d="M62 58 C64 38 68 24 74 12" stroke="#4A2233" strokeWidth="4" fill="none" strokeLinecap="round" />
+                <ellipse cx="78" cy="13" rx="11" ry="6" fill="#4A2233" transform="rotate(-24 78 13)" />
+            </svg>
+            <img
+                src="/bisou-rose.png"
+                alt=""
+                aria-hidden="true"
+                className="bg-mark bottom-[7%] right-[6%] w-36"
+                style={{ "--rot": "-12deg", animationDelay: "-14s" }}
+            />
 
             <main
                 inert={showIntro}
                 aria-hidden={showIntro}
-                className="flex min-h-screen w-full flex-col"
+                className="relative z-[1] flex min-h-screen w-full flex-col"
             >
                 {/* Hero — full bleed on mobile, contained on larger screens */}
                 <header
                     data-testid="hero-portrait"
+                    data-reveal
                     className="lg:mx-auto lg:flex lg:w-full lg:max-w-[1100px] lg:items-end lg:justify-center lg:gap-20 lg:px-10 lg:pt-20"
                 >
-                    <div className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0">
+                    <div
+                        ref={heroImgColRef}
+                        className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0"
+                    >
                         <div className="relative lg:w-fit">
                             <img
                                 src="/hero.jpg"
@@ -396,7 +469,11 @@ export default function App() {
                             </h1>
                         </div>
                     </div>
-                    <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
+                    <div
+                        data-reveal
+                        style={{ transitionDelay: "150ms" }}
+                        className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8"
+                    >
                         <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
                             Lauofgirly
                         </h1>
@@ -418,7 +495,10 @@ export default function App() {
                 </header>
 
                 {/* Tagline + first CTA (mobile / tablet) */}
-                <div className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden">
+                <div
+                    data-reveal
+                    className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden"
+                >
                     <p
                         data-testid="tagline"
                         className="mt-16 w-screen text-center text-[13px] font-medium leading-[1.9] text-[#4A2233]/80"
@@ -436,12 +516,16 @@ export default function App() {
                 </div>
 
                 {/* Cherries ornament — centred between the first button and the gallery */}
-                <div className={`${CHERRY_GAP} flex w-full justify-center`}>
+                <div
+                    data-reveal
+                    className={`${CHERRY_GAP} flex w-full justify-center`}
+                >
                     <CherriesCharm className="h-[320px] w-[320px] md:h-[360px] md:w-[360px] lg:h-[420px] lg:w-[420px]" />
                 </div>
 
                 {/* Gallery — horizontal strip */}
                 <section
+                    data-reveal
                     className={`relative ${CHERRY_GAP} w-full overflow-hidden`}
                     aria-label="Galerie de photos"
                 >
@@ -454,17 +538,53 @@ export default function App() {
                     <GalleryStrip onOpen={setLightboxPhoto} />
                 </section>
 
-                {/* Repeated CTA */}
-                <div className="mx-auto mt-32 w-full max-w-xs px-6">
-                    <CtaButton testId="cta-button-secondary" />
-                </div>
+                {/* Outro — a text block, not a second pill */}
+                <section
+                    data-testid="outro"
+                    className="mx-auto mt-20 flex w-full max-w-md flex-col items-center px-6 text-center"
+                    aria-label="En savoir plus"
+                >
+                    <h2
+                        data-reveal
+                        className="font-script text-5xl leading-snug text-[#4A2233]"
+                    >
+                        Un aperçu de mon monde
+                    </h2>
+                    <p
+                        data-reveal
+                        style={{ transitionDelay: "130ms" }}
+                        className="mt-5 text-[15px] font-medium leading-[2] text-[#4A2233]/75"
+                    >
+                        <span className="block">Ici, c’est juste un avant-goût.</span>
+                        <span className="block">
+                            Le reste, c’est ailleurs… et c’est pas mal moins sage.
+                        </span>
+                    </p>
+                    <a
+                        data-reveal
+                        style={{ transitionDelay: "260ms" }}
+                        data-testid="second-site-link"
+                        className="second-link mt-7"
+                        href={SECOND_SITE_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => {
+                            if (SECOND_SITE_URL === "SECOND_SITE_URL_PLACEHOLDER") {
+                                e.preventDefault();
+                            }
+                        }}
+                    >
+                        Viens voir
+                    </a>
+                </section>
 
                 {/* Footer */}
                 <footer
                     data-testid="footer"
-                    className="mx-auto mt-28 flex w-full max-w-md flex-col items-center px-6 pb-12"
+                    data-reveal
+                    className="mx-auto mt-20 flex w-full max-w-md flex-col items-center px-6 pb-12"
                 >
-                    <div className="hairline" />
+                    <div className="hairline" data-reveal="scale" />
                     <span className="font-script mt-10 text-3xl text-[#4A2233]/80">
                         Lauofgirly
                     </span>
