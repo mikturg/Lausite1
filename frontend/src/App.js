@@ -356,7 +356,6 @@ function Lightbox({ photo, onClose }) {
 export default function App() {
     const [showIntro, setShowIntro] = useState(false);
     const [lightboxPhoto, setLightboxPhoto] = useState(null);
-    const heroImgColRef = useRef(null);
 
     useEffect(() => {
         const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -381,36 +380,6 @@ export default function App() {
         );
         els.forEach((el) => io.observe(el));
         return () => io.disconnect();
-    }, []);
-
-    // Gentle parallax: desktop only. On mobile the script name is absolutely
-    // positioned inside the portrait column, so parallaxing that column drags
-    // the name down onto the tagline. On lg+ the text lives in its own column.
-    useEffect(() => {
-        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-        const el = heroImgColRef.current;
-        if (!el) return;
-        const wide = window.matchMedia("(min-width: 1024px)");
-        let raf = 0;
-        const apply = () => {
-            if (!wide.matches) {
-                el.style.transform = "";
-                return;
-            }
-            el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.12, 48)}px, 0)`;
-        };
-        const onScroll = () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(apply);
-        };
-        window.addEventListener("scroll", onScroll, { passive: true });
-        wide.addEventListener("change", apply);
-        apply();
-        return () => {
-            window.removeEventListener("scroll", onScroll);
-            wide.removeEventListener("change", apply);
-            cancelAnimationFrame(raf);
-        };
     }, []);
 
     return (
@@ -453,14 +422,10 @@ export default function App() {
                 {/* Hero — full bleed on mobile, contained on larger screens */}
                 <header
                     data-testid="hero-portrait"
-                    data-reveal
                     className="relative lg:mx-auto lg:flex lg:w-full lg:max-w-[1100px] lg:items-end lg:justify-center lg:gap-20 lg:px-10 lg:pt-20"
                 >
                     <div className="hero-glow" aria-hidden="true" />
-                    <div
-                        ref={heroImgColRef}
-                        className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0"
-                    >
+                    <div className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0">
                         <div className="relative lg:w-fit">
                             <img
                                 src="/hero.jpg"
@@ -497,11 +462,8 @@ export default function App() {
                     </div>
                 </header>
 
-                {/* Tagline + first CTA (mobile / tablet) */}
-                <div
-                    data-reveal="fade"
-                    className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden"
-                >
+                {/* Tagline + first CTA (mobile / tablet) — static, no reveal */}
+                <div className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden">
                     <p
                         data-testid="tagline"
                         className="mt-16 w-screen text-center text-[13px] font-medium leading-[1.9] text-[#4A2233]/80"

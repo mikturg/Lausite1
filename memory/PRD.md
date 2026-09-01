@@ -127,8 +127,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Diagnosis (instrumented scroll sampling): the reveal was NOT the cause. The parallax was — the script name is absolutely positioned INSIDE the parallaxed portrait column, so on scroll the name moved at 0.88× page speed while the tagline moved at 1.0×; they closed 12px per 100px of scroll and collided past scrollY≈300. (Contributing: absolute h1 reserves no layout space for its overhang.)
 - Fix: parallax now runs only at lg+ where the text lives in its own column (matchMedia min-width 1024 + reduced-motion gate; transform cleared below lg). Mobile tagline block is fade-only (data-reveal="fade"). Nested reveal on the desktop text column removed (was compounding with the header reveal).
 
-## Verification done (v21)
-Slow-scroll sampling 375px: name→tagline gap constant 37px at scroll 0/60/120/200/300/400/520/650 incl. mid-reveal. 1440px: constant 32px, tagline never intersects the image column; desktop parallax confirmed still active (image drifts vs static text). Screenshots at multiple intermediate scroll positions captured. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v22 — hero goes fully static)
+- Deleted (not disabled): the parallax useEffect + heroImgColRef, data-reveal on the hero header, data-reveal="fade" on the mobile tagline block. No scroll-driven or entrance transform remains on any hero element; name/tagline/button are fixed document-flow positions
+- Kept per spec: intro animation (pre-page), and everything below the hero (cherries spin/drag, gallery autoscroll, gradient drift, shimmer, bokeh, watermarks, reveals on lower sections, footer hairline draw)
+- Note: CTA breathing pulse/shimmer (idle, not scroll-driven) intentionally kept in hero; hero-glow has a static centering transform (never animated)
+
+## Verification done (v22)
+Slow-scroll sweeps with per-step DOM interrogation at 375px (scroll 0→650) and 1440px (0→700): zero scroll-driven or reveal transforms in the hero at every step; name→tagline gap constant 37px (375) / 32px (1440); screenshots at multiple intermediate positions show a completely static hero. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
