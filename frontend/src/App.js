@@ -423,26 +423,14 @@ export default function App() {
                 src="/bisou-rose.png"
                 alt=""
                 aria-hidden="true"
-                className="bg-mark left-[-3.5rem] top-[16%] w-64"
+                className="bg-mark left-16 top-[16%] w-64"
                 style={{ "--rot": "14deg" }}
             />
-            <svg
-                aria-hidden="true"
-                className="bg-mark right-[-2.5rem] top-[52%] w-48"
-                style={{ "--rot": "-8deg", animationDelay: "-8s" }}
-                viewBox="0 0 100 100"
-            >
-                <circle cx="38" cy="68" r="20" fill="#4A2233" />
-                <circle cx="64" cy="72" r="17" fill="#4A2233" />
-                <path d="M40 56 C46 32 58 20 74 12" stroke="#4A2233" strokeWidth="4" fill="none" strokeLinecap="round" />
-                <path d="M62 58 C64 38 68 24 74 12" stroke="#4A2233" strokeWidth="4" fill="none" strokeLinecap="round" />
-                <ellipse cx="78" cy="13" rx="11" ry="6" fill="#4A2233" transform="rotate(-24 78 13)" />
-            </svg>
             <img
                 src="/bisou-rose.png"
                 alt=""
                 aria-hidden="true"
-                className="bg-mark bottom-[7%] right-[6%] w-44"
+                className="bg-mark bottom-[7%] right-[10%] w-44"
                 style={{ "--rot": "-12deg", animationDelay: "-14s" }}
             />
 
@@ -469,9 +457,9 @@ export default function App() {
                                 className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] md:h-auto md:min-h-0 md:object-contain lg:h-[74svh] lg:w-auto"
                                 loading="eager"
                             />
-                            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/5 bg-gradient-to-b from-transparent to-[#FFF4F7] lg:h-1/4" />
-                            <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-1/4 bg-gradient-to-l from-[#FFF4F7] to-transparent lg:block" />
-                            <div className="pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 bg-gradient-to-r from-[#FFF4F7]/80 to-transparent lg:block" />
+                            <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 h-[62%] lg:h-[45%]" />
+                            <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
+                            <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
                                 Lauofgirly
                             </h1>

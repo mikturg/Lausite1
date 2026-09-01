@@ -119,8 +119,12 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Stacking audit: grain was one of several independently z-indexed background layers (all z-0); its removal changes nothing else — content still layers above via main z-[1]; gradient/vignette/bokeh/marks/glows confirmed intact
 - Recorded lesson: absolute /public URLs break css-loader — bundle assets via src/
 
-## Verification done (v19)
-375px + 1440px: grain element null in DOM, page renders with all other atmosphere intact (washes, vignette, bokeh, marks, glows), photos crisp, text sharp, no stacking gap. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v20 — hero seam + clipped watermark fixes)
+- Hero fade replaced with multi-stop eased gradients (6 stops bottom, 5 stops sides), fade distance extended (h-2/5 → 62% mobile / 45% desktop, side fades kept); end colour exactly rgba(255,244,247,1) = page bg
+- Kiss bg-mark moved fully inside the viewport (left-[-3.5rem] → left-16 — rotation expands bounds ~35px, accounted for); bottom-right kiss right 6%→10% for rotation headroom; neither sits behind name/tagline
+
+## Verification done (v20)
+375/768/1440 hero screenshots: no seam or band. Numeric boundary scan at 375px: max row-to-row luminance step 3.67 (smooth ramp; a seam reads 10-40+). Mark bounds at 375px: 35→349 and 153→346 — fully inside, rotation included.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
