@@ -3,6 +3,7 @@ import { Volume2, VolumeX } from "lucide-react";
 
 const MUSIC_KEY = "lauegauths_music";
 const TARGET_VOLUME = 0.25;
+const EVENTS = ["pointerdown", "click", "keydown", "touchstart", "touchend", "wheel", "scroll"];
 
 function fadeVolume(audio, target, ms, onDone) {
     const start = audio.volume;
@@ -22,6 +23,7 @@ function fadeVolume(audio, target, ms, onDone) {
 
 export default function MusicToggle({ enabled }) {
     const audioRef = useRef(null);
+    const disarmRef = useRef(() => {});
     const [playing, setPlaying] = useState(false);
 
     // Icon state reads the audio element itself (paused + muted)
@@ -39,31 +41,57 @@ export default function MusicToggle({ enabled }) {
         };
     }, []);
 
-    // Returning visitors who left music on: start on first interaction
-    // (only once the intro has finished)
+    // Autostart engine — only once the intro has finished, never if the
+    // visitor explicitly muted (localStorage "off" wins on every visit)
     useEffect(() => {
         if (!enabled) return;
-        if (localStorage.getItem(MUSIC_KEY) !== "on") return;
+        if (localStorage.getItem(MUSIC_KEY) === "off") return;
         const a = audioRef.current;
-        const tryStart = () => {
-            if (!a.paused) return;
-            a.muted = false;
-            a.volume = 0;
-            a.play()
-                .then(() => fadeVolume(a, TARGET_VOLUME, 600))
-                .catch(() => {});
+
+        const disarm = () => {
+            EVENTS.forEach((ev) => window.removeEventListener(ev, begin, true));
         };
-        window.addEventListener("pointerdown", tryStart, { once: true });
-        window.addEventListener("keydown", tryStart, { once: true });
+        disarmRef.current = disarm;
+
+        // Playback genuinely confirmed via the element's "playing" event
+        const onPlaying = () => {
+            if (a.muted) return; // muted autoplay doesn't count
+            a.volume = 0;
+            fadeVolume(a, TARGET_VOLUME, 600);
+            disarm();
+        };
+
+        const begin = () => {
+            a.muted = false;
+            if (a.paused) {
+                // If rejected (e.g. scroll/wheel grant nothing), stay armed:
+                // listeners are NOT removed here, the next interaction retries.
+                a.play().catch(() => {
+                    a.muted = true;
+                });
+            } else {
+                // Already armed via muted autoplay — fade in and disarm
+                a.volume = 0;
+                fadeVolume(a, TARGET_VOLUME, 600);
+                disarm();
+            }
+        };
+
+        // Arm the element with muted autoplay (allowed by browsers)
+        a.volume = 0;
+        a.play().catch(() => {});
+
+        a.addEventListener("playing", onPlaying);
+        EVENTS.forEach((ev) => window.addEventListener(ev, begin, { capture: true, passive: true }));
         return () => {
-            window.removeEventListener("pointerdown", tryStart);
-            window.removeEventListener("keydown", tryStart);
+            disarm();
+            a.removeEventListener("playing", onPlaying);
         };
     }, [enabled]);
 
     const toggle = async () => {
         const a = audioRef.current;
-        if (a.paused) {
+        if (a.paused || a.muted) {
             a.muted = false;
             a.volume = 0;
             try {
@@ -78,13 +106,14 @@ export default function MusicToggle({ enabled }) {
                 a.pause();
                 a.muted = true;
             });
-            localStorage.setItem(MUSIC_KEY, "off");
+            localStorage.setItem(MUSIC_KEY, "off"); // explicit mute: never overridden
+            disarmRef.current();
         }
     };
 
     return (
         <>
-            <audio ref={audioRef} src="/ambiance.mp3" preload="none" loop muted />
+            <audio ref={audioRef} src="/ambiance.mp3" preload="auto" loop muted />
             <button
                 data-testid="music-toggle-button"
                 onClick={toggle}

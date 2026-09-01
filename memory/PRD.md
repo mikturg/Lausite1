@@ -144,8 +144,14 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Behaviour: preload="none" (zero fetch until first unmute — verified via performance entries), fade-in to 0.25 over 600ms, fade-out then pause+mute, plain `loop` attribute (no seam fades), choice persisted in localStorage ("lauegauths_music"), returning visitors with "on" resume on first interaction after the intro (gated on intro completion), silent by default everywhere
 - Bug found+fixed in verification: rAF timestamps can predate performance.now(), making fade progress negative → IndexSizeError; progress and volume now clamped
 
-## Verification done (v25)
-375px: no fetch on load, toggle 44×44 bottom-right clear of content at all scroll positions, tap plays (vol 0.25, loop on), loop wrap measured (59.22s track, seeked to end — wrapped with no pause event), second tap pauses+mutes, rapid-toggle stress consistent. 1440px: silent during intro, returning-visitor autoplay fires post-intro at 0.25, toggle off works, no error overlay. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v26 — autostart music)
+- Music now starts on its own: muted autoplay arms the element once the intro finishes; listeners on pointerdown/click/keydown/touchstart/touchend/wheel/scroll all attempt unmute+play, and stay attached if play() rejects (scroll/wheel grant no audio permission) — they detach only after the element's "playing" event confirms real playback; fade-in 600ms to 0.25 on confirmed start
+- preload "none" → "auto" so the file is ready at first interaction
+- Explicit mute via the toggle saves "off" in localStorage and is never overridden by autostart; manual unmute always works and saves "on"
+- Toggle button, loop-without-seam-fade, and audio-element-as-source-of-truth unchanged
+
+## Verification done (v26)
+Scenario 1 (scroll-first): intro silent, muted autoplay armed post-intro (paused:false/muted:true), wheel started the fade (0.18 mid-ramp), click completed 0.25. Scenario 2 (click-first at 1440px): playing at 0.25 immediately. Scenario 3 (explicit mute → reload → click/scroll/key): stayed paused+muted, ls "off"; manual toggle unmute works (0.25).
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
