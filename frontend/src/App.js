@@ -392,7 +392,7 @@ export default function App() {
         const onScroll = () => {
             cancelAnimationFrame(raf);
             raf = requestAnimationFrame(() => {
-                el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.07, 22)}px, 0)`;
+                el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.12, 48)}px, 0)`;
             });
         };
         window.addEventListener("scroll", onScroll, { passive: true });
@@ -416,12 +416,12 @@ export default function App() {
                 src="/bisou-rose.png"
                 alt=""
                 aria-hidden="true"
-                className="bg-mark left-[-3.5rem] top-[16%] w-52"
+                className="bg-mark left-[-3.5rem] top-[16%] w-64"
                 style={{ "--rot": "14deg" }}
             />
             <svg
                 aria-hidden="true"
-                className="bg-mark right-[-2.5rem] top-[52%] w-40"
+                className="bg-mark right-[-2.5rem] top-[52%] w-48"
                 style={{ "--rot": "-8deg", animationDelay: "-8s" }}
                 viewBox="0 0 100 100"
             >
@@ -435,7 +435,7 @@ export default function App() {
                 src="/bisou-rose.png"
                 alt=""
                 aria-hidden="true"
-                className="bg-mark bottom-[7%] right-[6%] w-36"
+                className="bg-mark bottom-[7%] right-[6%] w-44"
                 style={{ "--rot": "-12deg", animationDelay: "-14s" }}
             />
 
