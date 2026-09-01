@@ -96,8 +96,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v15 — drift speed doubled)
 - Gallery drift 30 → 60 px/s (measured ~65px/s effective, ~2.2× faster); nothing else touched
 
-## Verification done (v15)
-Full cycle + wrap crossing at 375px (1.23 cycles) and 1440px (1.18 cycles): steady per-second deltas, zero anomalies, seamless wrap at the higher speed.
+## Implemented (July 2026, v16 — compact cherries block)
+- Deleted the "UN APERÇU DE MON MONDE" label and its gold hairline from the gallery section (footer hairline CSS retained — footer still uses it)
+- Single shared spacing constant CHERRY_GAP (mt-5 lg:mt-6) governs both gaps around the cherries — they can't drift apart; strip's own mt-12 removed
+- Desktop hero: dropped min-h-100svh and bottom padding, text column now bottom-aligns with the image so the charm sits exactly one gap under the desktop button too (right column is no longer vertically centred — required for equal gaps)
+
+## Verification done (v16)
+Measured gaps: 375px 19/20, 768px 19/20, 1440px 24/24 (from the actual button). Label + hairline confirmed gone. Rotation margins at 375px: worst 66px — no clipping at any angle. Desktop hero visually intact with bottom-aligned name/tagline/button.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

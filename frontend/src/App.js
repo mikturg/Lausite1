@@ -14,6 +14,9 @@ const GALLERY = [
     { src: "/g3.jpg", alt: "Lauofgirly en blanc, espiègle" },
 ];
 
+// Single shared gap above and below the cherries — they can't drift apart.
+const CHERRY_GAP = "mt-5 lg:mt-6";
+
 function GalleryStrip({ onOpen }) {
     const stripRef = useRef(null);
     const dragState = useRef({ startX: 0, scrollLeft: 0, moved: false, active: false });
@@ -160,7 +163,7 @@ function GalleryStrip({ onOpen }) {
         "absolute top-1/2 z-10 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-[#E8B96A]/60 bg-[#FFF4F7] text-[#4A2233] shadow-[0_6px_18px_rgba(74,34,51,0.12)] transition-colors duration-200 hover:bg-[#F7CAD9] md:flex";
 
     return (
-        <div className="relative mx-auto mt-12 w-full max-w-md sm:max-w-xl lg:max-w-3xl">
+        <div className="relative mx-auto w-full max-w-md sm:max-w-xl lg:max-w-3xl">
             <button
                 data-testid="gallery-arrow-prev"
                 aria-label="Photos précédentes"
@@ -375,7 +378,7 @@ export default function App() {
                 {/* Hero — full bleed on mobile, contained on larger screens */}
                 <header
                     data-testid="hero-portrait"
-                    className="lg:mx-auto lg:flex lg:min-h-[100svh] lg:w-full lg:max-w-[1100px] lg:items-center lg:justify-center lg:gap-20 lg:px-10 lg:py-24"
+                    className="lg:mx-auto lg:flex lg:w-full lg:max-w-[1100px] lg:items-end lg:justify-center lg:gap-20 lg:px-10 lg:pt-20"
                 >
                     <div className="md:mx-auto md:max-w-md md:pt-12 lg:mx-0 lg:max-w-none lg:shrink-0 lg:pt-0">
                         <div className="relative lg:w-fit">
@@ -433,13 +436,13 @@ export default function App() {
                 </div>
 
                 {/* Cherries ornament — centred between the first button and the gallery */}
-                <div className="mt-4 flex w-full justify-center lg:mt-4">
+                <div className={`${CHERRY_GAP} flex w-full justify-center`}>
                     <CherriesCharm className="h-[320px] w-[320px] md:h-[360px] md:w-[360px] lg:h-[420px] lg:w-[420px]" />
                 </div>
 
                 {/* Gallery — horizontal strip */}
                 <section
-                    className="relative mt-4 w-full overflow-hidden lg:mt-8"
+                    className={`relative ${CHERRY_GAP} w-full overflow-hidden`}
                     aria-label="Galerie de photos"
                 >
                     <img
@@ -448,12 +451,6 @@ export default function App() {
                         aria-hidden="true"
                         className="kiss-watermark"
                     />
-                    <div className="relative mx-auto flex w-full max-w-md flex-col items-center px-6">
-                        <div className="hairline" />
-                        <p className="section-label mt-6 text-center">
-                            Un aperçu de mon monde
-                        </p>
-                    </div>
                     <GalleryStrip onOpen={setLightboxPhoto} />
                 </section>
 
