@@ -383,21 +383,32 @@ export default function App() {
         return () => io.disconnect();
     }, []);
 
-    // Gentle parallax: the portrait lags the page by a few pixels
+    // Gentle parallax: desktop only. On mobile the script name is absolutely
+    // positioned inside the portrait column, so parallaxing that column drags
+    // the name down onto the tagline. On lg+ the text lives in its own column.
     useEffect(() => {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
         const el = heroImgColRef.current;
         if (!el) return;
+        const wide = window.matchMedia("(min-width: 1024px)");
         let raf = 0;
+        const apply = () => {
+            if (!wide.matches) {
+                el.style.transform = "";
+                return;
+            }
+            el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.12, 48)}px, 0)`;
+        };
         const onScroll = () => {
             cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => {
-                el.style.transform = `translate3d(0, ${Math.min(window.scrollY * 0.12, 48)}px, 0)`;
-            });
+            raf = requestAnimationFrame(apply);
         };
         window.addEventListener("scroll", onScroll, { passive: true });
+        wide.addEventListener("change", apply);
+        apply();
         return () => {
             window.removeEventListener("scroll", onScroll);
+            wide.removeEventListener("change", apply);
             cancelAnimationFrame(raf);
         };
     }, []);
@@ -465,11 +476,7 @@ export default function App() {
                             </h1>
                         </div>
                     </div>
-                    <div
-                        data-reveal
-                        style={{ transitionDelay: "150ms" }}
-                        className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8"
-                    >
+                    <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
                         <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
                             Lauofgirly
                         </h1>
@@ -492,7 +499,7 @@ export default function App() {
 
                 {/* Tagline + first CTA (mobile / tablet) */}
                 <div
-                    data-reveal
+                    data-reveal="fade"
                     className="mx-auto flex w-full max-w-md flex-col items-center px-6 md:mt-12 lg:hidden"
                 >
                     <p

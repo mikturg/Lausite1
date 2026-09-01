@@ -123,8 +123,12 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Hero fade replaced with multi-stop eased gradients (6 stops bottom, 5 stops sides), fade distance extended (h-2/5 → 62% mobile / 45% desktop, side fades kept); end colour exactly rgba(255,244,247,1) = page bg
 - Kiss bg-mark moved fully inside the viewport (left-[-3.5rem] → left-16 — rotation expands bounds ~35px, accounted for); bottom-right kiss right 6%→10% for rotation headroom; neither sits behind name/tagline
 
-## Verification done (v20)
-375/768/1440 hero screenshots: no seam or band. Numeric boundary scan at 375px: max row-to-row luminance step 3.67 (smooth ramp; a seam reads 10-40+). Mark bounds at 375px: 35→349 and 153→346 — fully inside, rotation included.
+## Implemented (July 2026, v21 — overlap root cause + fix)
+- Diagnosis (instrumented scroll sampling): the reveal was NOT the cause. The parallax was — the script name is absolutely positioned INSIDE the parallaxed portrait column, so on scroll the name moved at 0.88× page speed while the tagline moved at 1.0×; they closed 12px per 100px of scroll and collided past scrollY≈300. (Contributing: absolute h1 reserves no layout space for its overhang.)
+- Fix: parallax now runs only at lg+ where the text lives in its own column (matchMedia min-width 1024 + reduced-motion gate; transform cleared below lg). Mobile tagline block is fade-only (data-reveal="fade"). Nested reveal on the desktop text column removed (was compounding with the header reveal).
+
+## Verification done (v21)
+Slow-scroll sampling 375px: name→tagline gap constant 37px at scroll 0/60/120/200/300/400/520/650 incl. mid-reveal. 1440px: constant 32px, tagline never intersects the image column; desktop parallax confirmed still active (image drifts vs static text). Screenshots at multiple intermediate scroll positions captured. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
