@@ -266,7 +266,7 @@ function HandwrittenName() {
             className="intro-name-svg"
             viewBox={NAME_PATHS.viewBox}
             role="img"
-            aria-label="Lauofgirly"
+            aria-label="lauegauths"
         >
             {NAME_PATHS.paths.map((d, i) => (
                 <path key={i} d={d} strokeWidth={NAME_PATHS.strokeWidth} />

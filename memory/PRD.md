@@ -132,8 +132,12 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Kept per spec: intro animation (pre-page), and everything below the hero (cherries spin/drag, gallery autoscroll, gradient drift, shimmer, bokeh, watermarks, reveals on lower sections, footer hairline draw)
 - Note: CTA breathing pulse/shimmer (idle, not scroll-driven) intentionally kept in hero; hero-glow has a static centering transform (never animated)
 
-## Verification done (v22)
-Slow-scroll sweeps with per-step DOM interrogation at 375px (scroll 0→650) and 1440px (0→700): zero scroll-driven or reveal transforms in the hero at every step; name→tagline gap constant 37px (375) / 32px (1440); screenshots at multiple intermediate positions show a completely static hero. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v23 — intro name change)
+- Intro handwriting name changed to "lauegauths": SVG paths regenerated from the Great Vibes TTF with the same fontTools pipeline (real glyph outlines, stroke-dashoffset animation unchanged, same timing/kiss/skip). aria-label updated. Hero name remains "Lauofgirly"
+- /tmp generator + font were wiped by a pod restart; recreated on the fly (output persists at src/namePaths.json)
+
+## Verification done (v23)
+375px: mid-stroke capture shows "l"+"a" drawing stroke-by-stroke; late frame shows "lauegaut…" as true vector outlines left-to-right. Name box 263px wide within 375px viewport (56px margins each side). Hero name confirmed unchanged. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
