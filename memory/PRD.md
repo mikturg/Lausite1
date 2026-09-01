@@ -139,8 +139,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v24 — full rename)
 - "Lauofgirly" → "lauegauths" (all lowercase) everywhere: hero name (mobile + desktop), footer script + copyright, page title, meta description, OG/Twitter tags, noscript, gallery image alts. Intro SVG paths already regenerated for lauegauths in v23 (real glyph outlines). grep confirms zero old-name occurrences in src/ and public/index.html
 
-## Verification done (v24)
-grep: zero remaining. Served HTML title/og:title show "lauegauths — Mon petit univers". Screenshots: hero script name "lauegauths", intro writing mid-stroke, footer renamed.
+## Implemented (July 2026, v25 — background music)
+- ambiance.mp3 in public/, MusicToggle component (src/components/MusicToggle.js): fixed bottom-right 44px powder-pink frosted button (z-50, below intro), VolumeX/Volume2 lucide icons read from the audio element's real paused+muted state
+- Behaviour: preload="none" (zero fetch until first unmute — verified via performance entries), fade-in to 0.25 over 600ms, fade-out then pause+mute, plain `loop` attribute (no seam fades), choice persisted in localStorage ("lauegauths_music"), returning visitors with "on" resume on first interaction after the intro (gated on intro completion), silent by default everywhere
+- Bug found+fixed in verification: rAF timestamps can predate performance.now(), making fade progress negative → IndexSizeError; progress and volume now clamped
+
+## Verification done (v25)
+375px: no fetch on load, toggle 44×44 bottom-right clear of content at all scroll positions, tap plays (vol 0.25, loop on), loop wrap measured (59.22s track, seeked to end — wrapped with no pause event), second tap pauses+mutes, rapid-toggle stress consistent. 1440px: silent during intro, returning-visitor autoplay fires post-intro at 0.25, toggle off works, no error overlay. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

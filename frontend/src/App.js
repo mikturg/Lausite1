@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import CherriesCharm from "@/components/CherriesCharm";
+import MusicToggle from "@/components/MusicToggle";
 import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
@@ -388,6 +389,8 @@ export default function App() {
             className="relative min-h-screen overflow-x-clip bg-[#FFF4F7] text-[#4A2233] selection:bg-[#F7CAD9]"
         >
             {showIntro && <Intro onDone={() => setShowIntro(false)} />}
+
+            <MusicToggle enabled={!showIntro} />
 
             {/* Atmosphere layers — all behind the content */}
             <div className="gradient-drift" aria-hidden="true" />
