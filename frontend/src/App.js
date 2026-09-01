@@ -406,13 +406,6 @@ export default function App() {
                 src="/bisou-rose.png"
                 alt=""
                 aria-hidden="true"
-                className="bg-mark left-16 top-[16%] w-64"
-                style={{ "--rot": "14deg" }}
-            />
-            <img
-                src="/bisou-rose.png"
-                alt=""
-                aria-hidden="true"
                 className="bg-mark bottom-[7%] right-[10%] w-44"
                 style={{ "--rot": "-12deg", animationDelay: "-14s" }}
             />

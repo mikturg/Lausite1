@@ -153,8 +153,11 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v27 — music volume 0.25 → 0.15)
 - TARGET_VOLUME constant lowered to 0.15; all three fade-in paths (autostart confirm, armed-element unmute, manual toggle) reference the constant; fade-out always ends at 0 and pauses+mutes. grep confirms no 0.25 remains
 
-## Verification done (v27)
-375px: autostart settles at exactly 0.15; toggle off→on path also settles at 0.15.
+## Implemented (July 2026, v28 — hero kiss watermark deleted)
+- Removed the top-left kiss bg-mark (the one clipped by the hero fade behind the name). Kept: the bottom-right kiss mark and the gallery kiss watermark. Nothing sits behind the script name now except the intentional soft radial glow
+
+## Verification done (v28)
+375px (scroll 0/300/600) and 1440px (scroll 0/400): DOM confirms 1 bg-mark + 1 gallery watermark; screenshots show the area behind the name completely clean at every scroll position.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
