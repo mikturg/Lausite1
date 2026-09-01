@@ -150,8 +150,11 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Explicit mute via the toggle saves "off" in localStorage and is never overridden by autostart; manual unmute always works and saves "on"
 - Toggle button, loop-without-seam-fade, and audio-element-as-source-of-truth unchanged
 
-## Verification done (v26)
-Scenario 1 (scroll-first): intro silent, muted autoplay armed post-intro (paused:false/muted:true), wheel started the fade (0.18 mid-ramp), click completed 0.25. Scenario 2 (click-first at 1440px): playing at 0.25 immediately. Scenario 3 (explicit mute → reload → click/scroll/key): stayed paused+muted, ls "off"; manual toggle unmute works (0.25).
+## Implemented (July 2026, v27 — music volume 0.25 → 0.15)
+- TARGET_VOLUME constant lowered to 0.15; all three fade-in paths (autostart confirm, armed-element unmute, manual toggle) reference the constant; fade-out always ends at 0 and pauses+mutes. grep confirms no 0.25 remains
+
+## Verification done (v27)
+375px: autostart settles at exactly 0.15; toggle off→on path also settles at 0.15.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

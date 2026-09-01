@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Volume2, VolumeX } from "lucide-react";
 
 const MUSIC_KEY = "lauegauths_music";
-const TARGET_VOLUME = 0.25;
+const TARGET_VOLUME = 0.15;
 const EVENTS = ["pointerdown", "click", "keydown", "touchstart", "touchend", "wheel", "scroll"];
 
 function fadeVolume(audio, target, ms, onDone) {
