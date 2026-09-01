@@ -136,8 +136,11 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Intro handwriting name changed to "lauegauths": SVG paths regenerated from the Great Vibes TTF with the same fontTools pipeline (real glyph outlines, stroke-dashoffset animation unchanged, same timing/kiss/skip). aria-label updated. Hero name remains "Lauofgirly"
 - /tmp generator + font were wiped by a pod restart; recreated on the fly (output persists at src/namePaths.json)
 
-## Verification done (v23)
-375px: mid-stroke capture shows "l"+"a" drawing stroke-by-stroke; late frame shows "lauegaut…" as true vector outlines left-to-right. Name box 263px wide within 375px viewport (56px margins each side). Hero name confirmed unchanged. Note: verified via screenshot tooling — no testing_agent subagent exists in this environment's toolset.
+## Implemented (July 2026, v24 — full rename)
+- "Lauofgirly" → "lauegauths" (all lowercase) everywhere: hero name (mobile + desktop), footer script + copyright, page title, meta description, OG/Twitter tags, noscript, gallery image alts. Intro SVG paths already regenerated for lauegauths in v23 (real glyph outlines). grep confirms zero old-name occurrences in src/ and public/index.html
+
+## Verification done (v24)
+grep: zero remaining. Served HTML title/og:title show "lauegauths — Mon petit univers". Screenshots: hero script name "lauegauths", intro writing mid-stroke, footer renamed.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

@@ -8,11 +8,11 @@ const PRIMARY_URL = "PRIMARY_URL_PLACEHOLDER";
 const SECOND_SITE_URL = "SECOND_SITE_URL_PLACEHOLDER";
 
 const GALLERY = [
-    { src: "/g1.jpg", alt: "Lauofgirly en sweat rose" },
-    { src: "/g6.jpg", alt: "Lauofgirly devant le miroir" },
-    { src: "/g7.jpg", alt: "Sourire espiègle de Lauofgirly" },
-    { src: "/g5.jpg", alt: "Lauofgirly, miroir et sourire" },
-    { src: "/g3.jpg", alt: "Lauofgirly en blanc, espiègle" },
+    { src: "/g1.jpg", alt: "lauegauths en sweat rose" },
+    { src: "/g6.jpg", alt: "lauegauths devant le miroir" },
+    { src: "/g7.jpg", alt: "Sourire espiègle de lauegauths" },
+    { src: "/g5.jpg", alt: "lauegauths, miroir et sourire" },
+    { src: "/g3.jpg", alt: "lauegauths en blanc, espiègle" },
 ];
 
 // Single shared gap above and below the cherries — they can't drift apart.
@@ -429,7 +429,7 @@ export default function App() {
                         <div className="relative lg:w-fit">
                             <img
                                 src="/hero.jpg"
-                                alt="Portrait de Lauofgirly"
+                                alt="Portrait de lauegauths"
                                 className="h-[78svh] min-h-[480px] w-full object-cover object-[center_20%] md:h-auto md:min-h-0 md:object-contain lg:h-[74svh] lg:w-auto"
                                 loading="eager"
                             />
@@ -437,13 +437,13 @@ export default function App() {
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
-                                Lauofgirly
+                                lauegauths
                             </h1>
                         </div>
                     </div>
                     <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
                         <h1 className="font-script text-left text-8xl leading-tight text-[#4A2233] xl:text-[7rem]">
-                            Lauofgirly
+                            lauegauths
                         </h1>
                         <p
                             data-testid="tagline-desktop"
@@ -551,10 +551,10 @@ export default function App() {
                 >
                     <div className="hairline" data-reveal="scale" />
                     <span className="font-script mt-10 text-3xl text-[#4A2233]/80">
-                        Lauofgirly
+                        lauegauths
                     </span>
                     <p className="mt-3 text-xs text-[#4A2233]/55">
-                        © 2026 Lauofgirly · Tout doux, tout rose
+                        © 2026 lauegauths · Tout doux, tout rose
                     </p>
                     <p
                         data-testid="cherries-attribution"
