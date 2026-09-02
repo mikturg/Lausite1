@@ -228,8 +228,8 @@ function CtaButton({ testId }) {
     );
 }
 
-const WRITE_START_MS = 1700;
-const WRITE_WINDOW_MS = 2600;
+const WRITE_START_MS = 1200;
+const WRITE_WINDOW_MS = 1900;
 
 function HandwrittenName() {
     const svgRef = useRef(null);
@@ -293,8 +293,8 @@ function Intro({ onDone }) {
         const onKey = () => skip();
         window.addEventListener("keydown", onKey);
         timers.current = [
-            setTimeout(() => setFading(true), 5000),
-            setTimeout(finish, 5600),
+            setTimeout(() => setFading(true), 3400),
+            setTimeout(finish, 3900),
         ];
         return () => {
             window.removeEventListener("keydown", onKey);

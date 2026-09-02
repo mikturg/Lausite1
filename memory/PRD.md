@@ -159,8 +159,11 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v29 — new ambiance track)
 - ambiance.mp3 replaced in place (new file, 15.28s, 250KB). Audio code untouched: plain `loop` attribute, no fades/ramps anywhere near the seam (volume ramps exist only at user start/stop). All behaviours unchanged: autostart on first interaction, toggle, 0.15 volume, localStorage, preload auto
 
-## Verification done (v29)
-Interrupted-free 64s run: 4 natural wraps, 0 pause events, media clock drift ≤0.1s across all four seams (4×15.28s expected, measured exact) — no playback time lost at any wrap. One 'waiting' event fires per wrap but costs no measurable time (buffered file). Audible click-freedom can't be measured programmatically — noted to user for an ear check.
+## Implemented (July 2026, v30 — intro sped up to ~4s)
+- Kiss press 0.9s → 0.7s; writing starts at 1.2s (0.4s kiss hold) and draws over 1.9s (same gentle easing, same SVG paths); 0.3s hold; fade starts 3.4s, overlay removed 3.9s. Skip/replay/reduced-motion unchanged
+
+## Verification done (v30)
+375px: total ~3.4-3.9s measured, mid-write "lau" and full "lauegauths" outline captured. 1440px: ~3.1-3.9s, replay on reload + keypress skip confirmed.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

@@ -30,7 +30,7 @@
 
 .intro-overlay.intro-playing .intro-kiss {
     animation:
-        kiss-press 0.9s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards,
+        kiss-press 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s forwards,
         kiss-breathe 3.4s ease-in-out 1.15s infinite;
 }
 
