@@ -156,8 +156,11 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v28 — hero kiss watermark deleted)
 - Removed the top-left kiss bg-mark (the one clipped by the hero fade behind the name). Kept: the bottom-right kiss mark and the gallery kiss watermark. Nothing sits behind the script name now except the intentional soft radial glow
 
-## Verification done (v28)
-375px (scroll 0/300/600) and 1440px (scroll 0/400): DOM confirms 1 bg-mark + 1 gallery watermark; screenshots show the area behind the name completely clean at every scroll position.
+## Implemented (July 2026, v29 — new ambiance track)
+- ambiance.mp3 replaced in place (new file, 15.28s, 250KB). Audio code untouched: plain `loop` attribute, no fades/ramps anywhere near the seam (volume ramps exist only at user start/stop). All behaviours unchanged: autostart on first interaction, toggle, 0.15 volume, localStorage, preload auto
+
+## Verification done (v29)
+Interrupted-free 64s run: 4 natural wraps, 0 pause events, media clock drift ≤0.1s across all four seams (4×15.28s expected, measured exact) — no playback time lost at any wrap. One 'waiting' event fires per wrap but costs no measurable time (buffered file). Audible click-freedom can't be measured programmatically — noted to user for an ear check.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
