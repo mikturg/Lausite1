@@ -162,8 +162,12 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Implemented (July 2026, v30 — intro sped up to ~4s)
 - Kiss press 0.9s → 0.7s; writing starts at 1.2s (0.4s kiss hold) and draws over 1.9s (same gentle easing, same SVG paths); 0.3s hold; fade starts 3.4s, overlay removed 3.9s. Skip/replay/reduced-motion unchanged
 
-## Verification done (v30)
-375px: total ~3.4-3.9s measured, mid-write "lau" and full "lauegauths" outline captured. 1440px: ~3.1-3.9s, replay on reload + keypress skip confirmed.
+## Implemented (July 2026, v30b — background music fully removed)
+- Deleted: MusicToggle.js component, public/ambiance.mp3, the App.js import and usage, all interaction listeners, volume fade code, toggle button. A one-line localStorage.removeItem("lauegauths_music") in App's mount effect cleans the stored preference from returning visitors' browsers — the only remaining trace, intentional
+- Dependency check: nothing piggybacked on the music listeners (cherries drag, gallery drag/autoscroll, lightbox all have self-contained handlers — retested)
+
+## Verification done (v30b)
+375px + 1440px: toggle and audio element absent from DOM, corner clean at all scroll positions, /ambiance.mp3 no longer served as audio, no console errors, cherries drag rotates, gallery autoscroll drifts, lightbox opens/closes.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
