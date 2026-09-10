@@ -177,8 +177,12 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Shared CHERRY_GAP widened (mt-5/6 → mt-8/10) so tagline→cherries→photos reads even after the removal; closing-section rhythm confirmed (text→button 32px, button→hairline 80px, hairline→signature 40px)
 - Bottom soft-pink "Viens voir" stays under "Le reste, c'est ailleurs.", above signature/footer
 
-## Verification done (v32)
-375px full-scroll gap map: 40/32 mid-page, 80 section breaks, 20/32 closing, 40/12 footer — no dead zones; middle button absent, bottom button present. 1440px: middle button gone from desktop column, hero glow button intact, cherries render between hero and gallery, spacing even.
+## Implemented (July 2026, v33 — hero name overlay removed, button moved up)
+- Deleted the script "lauegauths" h1 overlaid on the hero photo (mobile/tablet only) + its now-unused .hero-name CSS. Name survives everywhere else: desktop text column, footer signature, page title, meta/OG tags
+- "Viens me rejoindre" moved from straddling the bottom edge to centred in the lower-middle of the photo (bottom 18%), same size/fill/glow/shine; soft plum blurred scrim behind it for readability over the photo; tagline follows the photo at normal spacing (no dead space)
+
+## Verification done (v33)
+375px: button 456–519px — visible with zero scrolling, one line, dead-centred (offset 0), over torso not face, photo fades cleanly into the tagline. 1440px: desktop name column intact, button re-centred in the image's lower-middle.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

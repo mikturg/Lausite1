@@ -409,11 +409,12 @@ export default function App() {
                             <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 h-[62%] lg:h-[45%]" />
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
-                            <h1 className="hero-name font-script absolute inset-x-0 bottom-16 text-center text-7xl text-[#4A2233] lg:hidden">
-                                lauegauths
-                            </h1>
-                            {/* Primary button straddling the photo's bottom edge */}
-                            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2 lg:translate-y-1/3">
+                            {/* Primary button centred in the lower-middle of the photo */}
+                            <div className="absolute bottom-[18%] left-1/2 z-10 -translate-x-1/2">
+                                <div
+                                    className="absolute left-1/2 top-1/2 -z-10 h-[190%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A2233]/25 blur-xl"
+                                    aria-hidden="true"
+                                />
                                 <a
                                     data-testid="cta-button-hero"
                                     className="cta-button cta-hero"

@@ -165,12 +165,6 @@
 }
 
 /* ---------- Hero ---------- */
-.hero-name {
-    text-shadow:
-        0 2px 18px rgba(255, 244, 247, 0.9),
-        0 1px 4px rgba(255, 244, 247, 0.7);
-}
-
 /* Multi-stop eased fades — a two-stop linear fade leaves a visible band */
 .hero-fade {
     background: linear-gradient(
