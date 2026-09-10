@@ -138,6 +138,32 @@
     transform: scale(0.97);
 }
 
+/* Hero button — the most prominent element: larger, glowing */
+.cta-hero {
+    width: auto;
+    min-height: 56px;
+    padding: 1.1rem 2.3rem;
+    font-size: 1.15rem;
+    white-space: nowrap;
+    animation: cta-hero-glow 3.4s ease-in-out infinite;
+}
+
+@keyframes cta-hero-glow {
+    0%,
+    100% {
+        transform: scale(1);
+        box-shadow:
+            0 10px 28px rgba(255, 77, 141, 0.4),
+            0 0 22px rgba(255, 77, 141, 0.35);
+    }
+    50% {
+        transform: scale(1.03);
+        box-shadow:
+            0 14px 38px rgba(255, 77, 141, 0.55),
+            0 0 48px rgba(255, 77, 141, 0.6);
+    }
+}
+
 /* ---------- Hero ---------- */
 .hero-name {
     text-shadow:
@@ -309,43 +335,37 @@
     cursor: pointer;
 }
 
-/* ---------- Outro text link ---------- */
-.second-link {
-    position: relative;
-    display: inline-block;
-    padding-bottom: 5px;
+/* ---------- Outro soft button ---------- */
+.cta-soft {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0.8rem 2.2rem;
+    border-radius: 9999px;
+    background-color: #f7cad9;
     color: #4a2233;
-    font-weight: 600;
-    font-size: 0.95rem;
-    letter-spacing: 0.14em;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     text-decoration: none;
+    border: 1px solid rgba(232, 185, 106, 0.5);
+    box-shadow: 0 8px 20px rgba(74, 34, 51, 0.12);
     transition:
-        color 0.3s ease,
-        transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+        box-shadow 0.3s ease,
+        background-color 0.3s ease;
 }
 
-.second-link::after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    height: 1px;
-    background-color: #e8b96a;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+.cta-soft:hover {
+    background-color: #f9d6e3;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 26px rgba(74, 34, 51, 0.16);
 }
 
-.second-link:hover,
-.second-link:focus-visible {
-    transform: translateY(-1px);
-}
-
-.second-link:hover::after,
-.second-link:focus-visible::after {
-    transform: scaleX(1);
+.cta-soft:active {
+    transform: scale(0.96);
 }
 
 /* ---------- Atmosphere: gradient drift ---------- */
@@ -545,8 +565,7 @@
     }
     .strip-card,
     .cta-button,
-    .second-link,
-    .second-link::after,
+    .cta-soft,
     .lightbox-close {
         transition: none;
     }

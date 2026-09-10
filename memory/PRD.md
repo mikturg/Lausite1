@@ -166,8 +166,14 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Deleted: MusicToggle.js component, public/ambiance.mp3, the App.js import and usage, all interaction listeners, volume fade code, toggle button. A one-line localStorage.removeItem("lauegauths_music") in App's mount effect cleans the stored preference from returning visitors' browsers — the only remaining trace, intentional
 - Dependency check: nothing piggybacked on the music listeners (cherries drag, gallery drag/autoscroll, lightbox all have self-contained handlers — retested)
 
-## Verification done (v30b)
-375px + 1440px: toggle and audio element absent from DOM, corner clean at all scroll positions, /ambiance.mp3 no longer served as audio, no console errors, cherries drag rotates, gallery autoscroll drifts, lightbox opens/closes.
+## Implemented (July 2026, v31 — hero primary button + outro button + copy trim)
+- Outro line shortened to "Le reste, c'est ailleurs." (same styling/position)
+- Outro text link replaced with a soft-pink pill button (.cta-soft: #F7CAD9 fill, plum text, gold hairline border, subtle shadow, 52px, press state; testid now cta-button-secondary); .second-link CSS deleted
+- New primary "Viens me rejoindre" button straddling the hero photo's bottom edge (all breakpoints via the shared image wrapper): hot pink, larger/heavier, pulsing glow halo (3.4s) + inherited shine sweep; positioned via a translate wrapper so the glow animation never fights positioning; mobile hero name moved up (bottom-16, overhang removed) to make room; links to PRIMARY_URL
+- Reduced-motion: glow + shine disabled, button fully visible
+
+## Verification done (v31)
+375px: button 64px tall, single line, visible with zero scrolling, 32px clear of name above and tagline below, face untouched. 1440px: straddles the image bottom, no collision with cherries (767 vs 770). Reduced-motion: animations none, button visible. Outro: new line present, old wording gone, soft button 52px.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

@@ -430,9 +430,26 @@ export default function App() {
                             <div className="hero-fade pointer-events-none absolute inset-x-0 bottom-0 h-[62%] lg:h-[45%]" />
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
-                            <h1 className="hero-name font-script absolute inset-x-0 bottom-0 translate-y-[38%] text-center text-7xl text-[#4A2233] md:translate-y-[30%] lg:hidden">
+                            <h1 className="hero-name font-script absolute inset-x-0 bottom-16 text-center text-7xl text-[#4A2233] lg:hidden">
                                 lauegauths
                             </h1>
+                            {/* Primary button straddling the photo's bottom edge */}
+                            <div className="absolute bottom-0 left-1/2 z-10 -translate-x-1/2 translate-y-1/2 lg:translate-y-1/3">
+                                <a
+                                    data-testid="cta-button-hero"
+                                    className="cta-button cta-hero"
+                                    href={PRIMARY_URL}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onClick={(e) => {
+                                        if (PRIMARY_URL === "PRIMARY_URL_PLACEHOLDER") {
+                                            e.preventDefault();
+                                        }
+                                    }}
+                                >
+                                    <span>Viens me rejoindre</span>
+                                </a>
+                            </div>
                         </div>
                     </div>
                     <div className="hidden lg:flex lg:flex-col lg:items-start lg:justify-center lg:gap-8">
@@ -515,15 +532,13 @@ export default function App() {
                         className="mt-5 text-[15px] font-medium leading-[2] text-[#4A2233]/75"
                     >
                         <span className="block">Ici, c’est juste un avant-goût.</span>
-                        <span className="block">
-                            Le reste, c’est ailleurs… et c’est pas mal moins sage.
-                        </span>
+                        <span className="block">Le reste, c’est ailleurs.</span>
                     </p>
                     <a
                         data-reveal
                         style={{ transitionDelay: "260ms" }}
-                        data-testid="second-site-link"
-                        className="second-link mt-7"
+                        data-testid="cta-button-secondary"
+                        className="cta-soft mt-8"
                         href={SECOND_SITE_URL}
                         target="_blank"
                         rel="noopener noreferrer"
