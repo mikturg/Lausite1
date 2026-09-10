@@ -16,7 +16,7 @@ const GALLERY = [
 ];
 
 // Single shared gap above and below the cherries — they can't drift apart.
-const CHERRY_GAP = "mt-5 lg:mt-6";
+const CHERRY_GAP = "mt-8 lg:mt-10";
 
 function GalleryStrip({ onOpen }) {
     const stripRef = useRef(null);
@@ -203,27 +203,6 @@ function GalleryStrip({ onOpen }) {
                 ))}
             </div>
         </div>
-    );
-}
-
-function CtaButton({ testId }) {
-    const handleClick = (e) => {
-        if (PRIMARY_URL === "PRIMARY_URL_PLACEHOLDER") {
-            e.preventDefault();
-        }
-    };
-
-    return (
-        <a
-            data-testid={testId}
-            className="cta-button"
-            href={PRIMARY_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={handleClick}
-        >
-            <span>Viens voir</span>
-        </a>
     );
 }
 
@@ -467,9 +446,6 @@ export default function App() {
                                 J’ai la solution pour que tu passes une belle soirée..
                             </span>
                         </p>
-                        <div className="w-full max-w-xs">
-                            <CtaButton testId="cta-button-primary-desktop" />
-                        </div>
                     </div>
                 </header>
 
@@ -486,12 +462,9 @@ export default function App() {
                             J’ai la solution pour que tu passes une belle soirée..
                         </span>
                     </p>
-                    <div className="mt-10 w-full max-w-xs">
-                        <CtaButton testId="cta-button-primary" />
-                    </div>
                 </div>
 
-                {/* Cherries ornament — centred between the first button and the gallery */}
+                {/* Cherries ornament — centred between the tagline and the gallery */}
                 <div
                     data-reveal
                     className={`${CHERRY_GAP} flex w-full justify-center`}

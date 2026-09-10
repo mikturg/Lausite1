@@ -172,8 +172,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - New primary "Viens me rejoindre" button straddling the hero photo's bottom edge (all breakpoints via the shared image wrapper): hot pink, larger/heavier, pulsing glow halo (3.4s) + inherited shine sweep; positioned via a translate wrapper so the glow animation never fights positioning; mobile hero name moved up (bottom-16, overhang removed) to make room; links to PRIMARY_URL
 - Reduced-motion: glow + shine disabled, button fully visible
 
-## Verification done (v31)
-375px: button 64px tall, single line, visible with zero scrolling, 32px clear of name above and tagline below, face untouched. 1440px: straddles the image bottom, no collision with cherries (767 vs 770). Reduced-motion: animations none, button visible. Outro: new line present, old wording gone, soft button 52px.
+## Implemented (July 2026, v32 — middle button removed, layout tightened)
+- Removed the middle "VIENS VOIR" pill from below the tagline — both the mobile/tablet instance AND the desktop hero right-column instance (caught on desktop verification); the CtaButton component became orphaned and was deleted too
+- Shared CHERRY_GAP widened (mt-5/6 → mt-8/10) so tagline→cherries→photos reads even after the removal; closing-section rhythm confirmed (text→button 32px, button→hairline 80px, hairline→signature 40px)
+- Bottom soft-pink "Viens voir" stays under "Le reste, c'est ailleurs.", above signature/footer
+
+## Verification done (v32)
+375px full-scroll gap map: 40/32 mid-page, 80 section breaks, 20/32 closing, 40/12 footer — no dead zones; middle button absent, bottom button present. 1440px: middle button gone from desktop column, hero glow button intact, cherries render between hero and gallery, spacing even.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
