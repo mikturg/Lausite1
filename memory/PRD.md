@@ -181,8 +181,13 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 - Deleted the script "lauegauths" h1 overlaid on the hero photo (mobile/tablet only) + its now-unused .hero-name CSS. Name survives everywhere else: desktop text column, footer signature, page title, meta/OG tags
 - "Viens me rejoindre" moved from straddling the bottom edge to centred in the lower-middle of the photo (bottom 18%), same size/fill/glow/shine; soft plum blurred scrim behind it for readability over the photo; tagline follows the photo at normal spacing (no dead space)
 
-## Verification done (v33)
-375px: button 456–519px — visible with zero scrolling, one line, dead-centred (offset 0), over torso not face, photo fades cleanly into the tagline. 1440px: desktop name column intact, button re-centred in the image's lower-middle.
+## Implemented (July 2026, v34 — live URL connected)
+- PRIMARY_URL and SECOND_SITE_URL both set to https://www.lauegauths.com — the hero "Viens me rejoindre" and closing "Viens voir" buttons now navigate for real (new tab, rel noopener noreferrer)
+- Placeholder guard onClick handlers deleted — grep for "PLACEHOLDER" across src/ and public/ returns nothing
+- Note: the "old destination" was never a real URL — both buttons pointed at placeholder constants, now fully gone
+
+## Verification done (v34)
+375px: both rendered anchors read href https://www.lauegauths.com/, target _blank, rel noopener noreferrer; hero button styling/glow unchanged in screenshot.
 
 ## Backlog
 - P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL

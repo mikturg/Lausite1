@@ -4,8 +4,8 @@ import CherriesCharm from "@/components/CherriesCharm";
 import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
 
-const PRIMARY_URL = "PRIMARY_URL_PLACEHOLDER";
-const SECOND_SITE_URL = "SECOND_SITE_URL_PLACEHOLDER";
+const PRIMARY_URL = "https://www.lauegauths.com";
+const SECOND_SITE_URL = "https://www.lauegauths.com";
 
 const GALLERY = [
     { src: "/g1.jpg", alt: "lauegauths en sweat rose" },
@@ -421,11 +421,6 @@ export default function App() {
                                     href={PRIMARY_URL}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    onClick={(e) => {
-                                        if (PRIMARY_URL === "PRIMARY_URL_PLACEHOLDER") {
-                                            e.preventDefault();
-                                        }
-                                    }}
                                 >
                                     <span>Viens me rejoindre</span>
                                 </a>
@@ -516,11 +511,6 @@ export default function App() {
                         href={SECOND_SITE_URL}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => {
-                            if (SECOND_SITE_URL === "SECOND_SITE_URL_PLACEHOLDER") {
-                                e.preventDefault();
-                            }
-                        }}
                     >
                         Viens voir
                     </a>
