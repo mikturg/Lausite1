@@ -203,5 +203,13 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
 
+## Implemented (July 2026, v36 — "spicy" chili badge on second TikTok pill)
+- The @lauegauths2 pill now carries a small chili badge: 17px cream circle (thin gold border, soft shadow) overlapping the pill's top-right corner, 🌶️ at 10px, tilted 8° (emoji explicitly requested by user); cute wiggle animation on pill hover/focus, disabled under prefers-reduced-motion
+- Tooltip for that pill reads "@lauegauths2 🌶️" (data-handle); aria-label extended to "TikTok @lauegauths2, compte épicé" for screen readers
+- First pill (@lauegauthsss) byte-identical — verified via DOM check (no .tiktok-chili inside link 1) and close-up capture
+
+## Verification done (v36)
+375px mobile hero + desktop hover screenshots + element close-up: badge crisp and subtle, no layout shift, first pill untouched, tooltip with chili readable below the hovered pill.
+
 ## Credentials
 None — no auth in this app.

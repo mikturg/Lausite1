@@ -9,7 +9,7 @@ const SECOND_SITE_URL = "https://www.lauegauths.com";
 
 const TIKTOK_ACCOUNTS = [
     { handle: "@lauegauthsss", url: "https://www.tiktok.com/@lauegauthsss" },
-    { handle: "@lauegauths2", url: "https://www.tiktok.com/@lauegauths2" },
+    { handle: "@lauegauths2", url: "https://www.tiktok.com/@lauegauths2", spicy: true },
 ];
 
 // TikTok brand glyph (Simple Icons path) — lucide-react has no TikTok icon.
@@ -453,10 +453,23 @@ export default function App() {
                                             href={account.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label={`TikTok ${account.handle}`}
-                                            data-handle={account.handle}
+                                            aria-label={
+                                                account.spicy
+                                                    ? `TikTok ${account.handle}, compte épicé`
+                                                    : `TikTok ${account.handle}`
+                                            }
+                                            data-handle={
+                                                account.spicy
+                                                    ? `${account.handle} 🌶️`
+                                                    : account.handle
+                                            }
                                         >
                                             <TikTokIcon />
+                                            {account.spicy && (
+                                                <span className="tiktok-chili" aria-hidden="true">
+                                                    🌶️
+                                                </span>
+                                            )}
                                         </a>
                                     ))}
                                 </div>
