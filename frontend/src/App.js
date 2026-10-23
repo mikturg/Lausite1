@@ -449,7 +449,7 @@ export default function App() {
                                         <a
                                             key={account.handle}
                                             data-testid={`tiktok-link-${index + 1}`}
-                                            className="tiktok-pill"
+                                            className={`tiktok-pill${account.spicy ? " tiktok-pill--spicy" : ""}`}
                                             href={account.url}
                                             target="_blank"
                                             rel="noopener noreferrer"
@@ -458,13 +458,9 @@ export default function App() {
                                                     ? `TikTok ${account.handle}, compte épicé`
                                                     : `TikTok ${account.handle}`
                                             }
-                                            data-handle={
-                                                account.spicy
-                                                    ? `${account.handle} 🌶️`
-                                                    : account.handle
-                                            }
                                         >
                                             <TikTokIcon />
+                                            <span className="tiktok-handle">{account.handle}</span>
                                             {account.spicy && (
                                                 <span className="tiktok-chili" aria-hidden="true">
                                                     🌶️

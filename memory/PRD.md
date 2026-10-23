@@ -199,6 +199,16 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Verification done (v35)
 Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA, no overlap with the face or text, tagline spacing unchanged. DOM check: both hrefs correct, target _blank, aria-labels with handles. Desktop hover captured: pill turns pink, handle tooltip readable below.
 
+## Implemented (July 2026, v37 — bigger, differentiated TikTok pills)
+- Pills redesigned from icon-only circles (42px) to full buttons: TikTok icon + visible handle text (0.76rem, weight 600), padding 0.65rem 0.95rem, ~41px tall × ~149px wide — much larger tap area, still clearly smaller than the 56px main CTA
+- Pill 1 (@lauegauthsss): unchanged identity — frosted cream bg, thin gold border, hot-pink icon, plum handle
+- Pill 2 (@lauegauths2): warm pink-to-red gradient (135deg, #ff7ba2 → #f0447a → #d92b54), white icon + handle, soft breathing glow (box-shadow pulse 3.4s, no transform), red chili 🌶️ inline next to the handle (was a corner badge); hover wiggle kept
+- Hover tooltip removed (handle now visible on the pill — redundant); data-handle attribute and ::after CSS deleted; row gap 0.9 → 0.7rem
+- Reduced-motion: spicy glow + chili wiggle disabled, tooltip rule cleanup
+
+## Verification done (v37)
+375px mobile: row width measured 328px (fits with ~23px margins), pills sit under the CTA without touching face or tagline. DOM check: pill 1 text "@lauegauthsss" with plain class, pill 2 "@lauegauths2🌶️" with spicy class. Desktop hover + row close-up captured — gradient, glow and chili crisp.
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
