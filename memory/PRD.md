@@ -189,8 +189,17 @@ Two full loop cycles watched at both 375px and 1440px with per-1.5s sampling —
 ## Verification done (v34)
 375px: both rendered anchors read href https://www.lauegauths.com/, target _blank, rel noopener noreferrer; hero button styling/glow unchanged in screenshot.
 
+## Implemented (July 2026, v35 — TikTok accounts row in hero)
+- Two TikTok links added under the hero "Viens me rejoindre" button: @lauegauthsss and @lauegauths2 (https://www.tiktok.com/@…), target _blank + rel noopener noreferrer
+- User-chosen design: two round pills (42px, cream frosted bg, thin gold border, hot-pink TikTok glyph via inline SVG — lucide has no brand icon), centred directly under the button on the photo (shared flex-column anchor moved from bottom 18% → 10% so the button keeps its visual spot)
+- Hover: pill inverts to hot pink with soft glow; tooltip showing the handle appears BELOW the pill (v1 had it above, overlapping the CTA — fixed); tooltip also on keyboard focus
+- Entrance: opacity-only fade once the intro finishes (class toggled on showIntro) — zero transform, hero stays fully static per the v22 rule; reduced-motion shows it instantly
+- g4.jpg: user explicitly chose to KEEP the file in frontend/public (previous deletion plan cancelled)
+
+## Verification done (v35)
+Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA, no overlap with the face or text, tagline spacing unchanged. DOM check: both hrefs correct, target _blank, aria-labels with handles. Desktop hover captured: pill turns pink, handle tooltip readable below.
+
 ## Backlog
-- P0: Swap `PRIMARY_URL` in `src/App.js` with the real destination URL
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
 

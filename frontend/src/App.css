@@ -199,6 +199,77 @@
     );
 }
 
+/* ---------- TikTok row (hero) ---------- */
+.tiktok-row {
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.9s ease 0.25s;
+}
+
+.tiktok-row--in {
+    opacity: 1;
+}
+
+.tiktok-pill {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 9999px;
+    background-color: rgba(255, 251, 253, 0.92);
+    border: 1px solid rgba(198, 156, 88, 0.55);
+    color: #ff4d8d;
+    box-shadow: 0 6px 18px rgba(74, 34, 51, 0.16);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease,
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.tiktok-pill:hover {
+    transform: translateY(-2px) scale(1.07);
+    background-color: #ff4d8d;
+    color: #ffffff;
+    box-shadow: 0 10px 24px rgba(255, 77, 141, 0.45);
+}
+
+/* Handle tooltip — desktop hover and keyboard focus only */
+.tiktok-pill::after {
+    content: attr(data-handle);
+    position: absolute;
+    top: calc(100% + 9px);
+    left: 50%;
+    transform: translate(-50%, -3px);
+    padding: 0.3rem 0.65rem;
+    border-radius: 9999px;
+    background-color: #4a2233;
+    color: #fff4f7;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition:
+        opacity 0.2s ease,
+        transform 0.2s ease;
+}
+
+.tiktok-pill:hover::after,
+.tiktok-pill:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+
 /* ---------- Section rhythm ---------- */
 .hairline {
     width: 5rem;
@@ -560,8 +631,14 @@
     .strip-card,
     .cta-button,
     .cta-soft,
-    .lightbox-close {
+    .lightbox-close,
+    .tiktok-row,
+    .tiktok-pill,
+    .tiktok-pill::after {
         transition: none;
+    }
+    .tiktok-row {
+        opacity: 1;
     }
     [data-reveal] {
         opacity: 1 !important;
