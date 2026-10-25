@@ -209,6 +209,14 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 ## Verification done (v37)
 375px mobile: row width measured 328px (fits with ~23px margins), pills sit under the CTA without touching face or tagline. DOM check: pill 1 text "@lauegauthsss" with plain class, pill 2 "@lauegauths2🌶️" with spicy class. Desktop hover + row close-up captured — gradient, glow and chili crisp.
 
+## Implemented (July 2026, v38 — hero social group: spacing, label, red chili)
+- Gap between "Viens me rejoindre" and the TikTok group widened (gap-4 → gap-6, measured 24px)
+- New centred label above the pills: "Mes seuls comptes TikTok" (exact wording) — 0.72rem plum at 72% opacity, letter-spacing 0.08em, nowrap; grouped with the row in a new .tiktok-social wrapper that keeps the intro-fade behaviour (testids: tiktok-social, tiktok-label; tiktok-row kept on the links row)
+- Chili fixed: emoji replaced by a hand-drawn SVG chili (ChiliIcon — deterministic red #E63428 pod + green stem, 13px, tilted 12°) inside a 20px cream badge circle so it stays clearly red on the spicy gradient; wiggle kept (rebased to 0° since tilt now lives on the SVG); reduced-motion updated for the renamed fade wrapper
+
+## Verification done (v38)
+375px + 1366px screenshots and group close-up: 24px button→label gap measured in DOM, exact label text confirmed, chili crisp and red, no overlap with face or tagline, row still fits (328px incl. label 166px centred). Fixed a self-inflicted JSX brace error (insert landed inside TikTokIcon) before verifying.
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps

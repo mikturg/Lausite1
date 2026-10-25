@@ -21,6 +21,30 @@ function TikTokIcon() {
     );
 }
 
+// Red chili glyph — deterministic red at any size (emoji rendered tiny/greenish).
+function ChiliIcon() {
+    return (
+        <svg
+            viewBox="0 0 24 24"
+            width="13"
+            height="13"
+            aria-hidden="true"
+            style={{ transform: "rotate(12deg)" }}
+        >
+            <path
+                d="M13.6 5.2c.7-1.3 1.8-2.2 3.3-2.6"
+                fill="none"
+                stroke="#3E7C4F"
+                strokeWidth="1.8"
+                strokeLinecap="round"
+            />
+            <path
+                d="M13.4 6.3c4.2 1.2 6.5 5 5.3 9.3-1.3 4.6-6 7.4-11 6.9-1.7-.2-3.1-.8-4-1.5-.5-.4-.4-1.1.2-1.4 4.4-2 7.5-5.2 8.3-10 .1-1.2.5-2.2 1.2-3.3z"
+                fill="#E63428"
+            />
+        </svg>
+    );
+}
 
 const GALLERY = [
     { src: "/g1.jpg", alt: "lauegauths en sweat rose" },
@@ -425,7 +449,7 @@ export default function App() {
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             {/* Primary button + TikTok row, centred in the lower-middle of the photo */}
-                            <div className="absolute bottom-[10%] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-4">
+                            <div className="absolute bottom-[10%] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-6">
                                 <div className="relative">
                                     <div
                                         className="absolute left-1/2 top-1/2 -z-10 h-[190%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A2233]/25 blur-xl"
@@ -442,32 +466,37 @@ export default function App() {
                                     </a>
                                 </div>
                                 <div
-                                    data-testid="tiktok-row"
-                                    className={`tiktok-row${showIntro ? "" : " tiktok-row--in"}`}
+                                    data-testid="tiktok-social"
+                                    className={`tiktok-social${showIntro ? "" : " tiktok-social--in"}`}
                                 >
-                                    {TIKTOK_ACCOUNTS.map((account, index) => (
-                                        <a
-                                            key={account.handle}
-                                            data-testid={`tiktok-link-${index + 1}`}
-                                            className={`tiktok-pill${account.spicy ? " tiktok-pill--spicy" : ""}`}
-                                            href={account.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            aria-label={
-                                                account.spicy
-                                                    ? `TikTok ${account.handle}, compte épicé`
-                                                    : `TikTok ${account.handle}`
-                                            }
-                                        >
-                                            <TikTokIcon />
-                                            <span className="tiktok-handle">{account.handle}</span>
-                                            {account.spicy && (
-                                                <span className="tiktok-chili" aria-hidden="true">
-                                                    🌶️
-                                                </span>
-                                            )}
-                                        </a>
-                                    ))}
+                                    <p data-testid="tiktok-label" className="tiktok-label">
+                                        Mes seuls comptes TikTok
+                                    </p>
+                                    <div data-testid="tiktok-row" className="tiktok-row">
+                                        {TIKTOK_ACCOUNTS.map((account, index) => (
+                                            <a
+                                                key={account.handle}
+                                                data-testid={`tiktok-link-${index + 1}`}
+                                                className={`tiktok-pill${account.spicy ? " tiktok-pill--spicy" : ""}`}
+                                                href={account.url}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                aria-label={
+                                                    account.spicy
+                                                        ? `TikTok ${account.handle}, compte épicé`
+                                                        : `TikTok ${account.handle}`
+                                                }
+                                            >
+                                                <TikTokIcon />
+                                                <span className="tiktok-handle">{account.handle}</span>
+                                                {account.spicy && (
+                                                    <span className="tiktok-chili" aria-hidden="true">
+                                                        <ChiliIcon />
+                                                    </span>
+                                                )}
+                                            </a>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -200,16 +200,33 @@
 }
 
 /* ---------- TikTok row (hero) ---------- */
-.tiktok-row {
+.tiktok-social {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 0.7rem;
+    gap: 0.6rem;
     opacity: 0;
     transition: opacity 0.9s ease 0.25s;
 }
 
-.tiktok-row--in {
+.tiktok-social--in {
     opacity: 1;
+}
+
+.tiktok-label {
+    margin: 0;
+    color: rgba(74, 34, 51, 0.72);
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.tiktok-row {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
 }
 
 .tiktok-pill {
@@ -276,9 +293,15 @@
 }
 
 .tiktok-chili {
-    font-size: 0.8rem;
-    line-height: 1;
-    transform: rotate(8deg);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    margin-left: 0.1rem;
+    border-radius: 9999px;
+    background-color: #fffbfd;
+    box-shadow: 0 2px 6px rgba(74, 34, 51, 0.25);
 }
 
 .tiktok-pill:hover .tiktok-chili,
@@ -289,13 +312,13 @@
 @keyframes chili-wiggle {
     0%,
     100% {
-        transform: rotate(8deg);
+        transform: rotate(0deg);
     }
     30% {
-        transform: rotate(-9deg);
+        transform: rotate(-14deg);
     }
     60% {
-        transform: rotate(14deg);
+        transform: rotate(10deg);
     }
 }
 
@@ -664,11 +687,11 @@
     .cta-button,
     .cta-soft,
     .lightbox-close,
-    .tiktok-row,
+    .tiktok-social,
     .tiktok-pill {
         transition: none;
     }
-    .tiktok-row {
+    .tiktok-social {
         opacity: 1;
     }
     [data-reveal] {
