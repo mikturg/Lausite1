@@ -449,7 +449,7 @@ export default function App() {
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             {/* Primary button + TikTok row, centred in the lower-middle of the photo */}
-                            <div className="absolute bottom-[10%] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-6">
+                            <div className="absolute bottom-[10%] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-12">
                                 <div className="relative">
                                     <div
                                         className="absolute left-1/2 top-1/2 -z-10 h-[190%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A2233]/25 blur-xl"

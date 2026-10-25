@@ -217,6 +217,12 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 ## Verification done (v38)
 375px + 1366px screenshots and group close-up: 24px button→label gap measured in DOM, exact label text confirmed, chili crisp and red, no overlap with face or tagline, row still fits (328px incl. label 166px centred). Fixed a self-inflicted JSX brace error (insert landed inside TikTokIcon) before verifying.
 
+## Implemented (July 2026, v39 — hero social group spacing + label prominence)
+- Button → TikTok group gap doubled: gap-6 → gap-12 (measured 48px)
+- Label sits closer to the pills: .tiktok-social gap 0.6 → 0.45rem (measured 7px)
+- Label more prominent: 0.72 → 0.8rem, weight 500 → 600, color rgba(74,34,51,0.72) → 0.92; letter-spacing/nowrap/centring unchanged
+- Verified at 375px + 1366px: button still clear of the face, nothing overlaps the tagline below
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
