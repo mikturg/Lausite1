@@ -237,6 +237,13 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Whole hero group lowered: container bottom 8% → 3% — on 375px mobile her face/lips are fully clear of the button; wishlist pill bottom sits 18px above the photo's bottom edge, tagline untouched
 - Wishlist pill byte-identical to v40 (2 forced lines verified again: [1,1] rendered)
 
+## Implemented (July 2026, v42 — CTA decorations matched to user's reference)
+- Replaced v41 decorations with the user's exact SVGs: sparkle = 36×24, 3 strokes (white, 2.5px, round caps) — top-left rotated -20°, top-right rotated 20° (symmetric glyph, mirror is a no-op); hearts = 28×26 outline path (white, 2px, round joins)
+- Placement per spec (measured in DOM): sparkle bottoms ~7px above the button's top edge, slightly overlapping the corners (top -18px, left/right -8px; rotation lives on the inner svg so the twinkle scale on the wrapper never fights it); hearts vertically centred, 15px outside the button's edges (left/right -42px, top calc(50% - 13px))
+- Drop shadow updated to the specified 0 1px 4px rgba(0,0,0,0.25); soft staggered twinkle kept
+- Button itself: 2px white border + outer glow 0 0 24px rgba(255,78,141,0.55) — set as a STATIC box-shadow on .cta-hero (so reduced-motion users keep the glow) and as the base state of the cta-hero-glow keyframes (peak 0 0 44px/.65)
+- Verified against the reference screenshot at 375px and 1366px: size/position/thickness/spacing of sparkles and hearts match, face fully clear, wishlist unchanged
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps

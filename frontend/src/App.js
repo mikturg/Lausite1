@@ -467,27 +467,43 @@ export default function App() {
                                         <span>Viens me rejoindre</span>
                                     </a>
                                     <span className="cta-deco cta-sparkle-left" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                                            <path d="M12 4v5" />
-                                            <path d="M6 7l3.5 3.5" />
-                                            <path d="M18 7l-3.5 3.5" />
+                                        <svg width="36" height="24" viewBox="0 0 36 24">
+                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
+                                                <line x1="18" y1="3" x2="18" y2="12" />
+                                                <line x1="6" y1="7" x2="11" y2="14" />
+                                                <line x1="30" y1="7" x2="25" y2="14" />
+                                            </g>
                                         </svg>
                                     </span>
                                     <span className="cta-deco cta-sparkle-right" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-                                            <path d="M12 4v5" />
-                                            <path d="M6 7l3.5 3.5" />
-                                            <path d="M18 7l-3.5 3.5" />
+                                        <svg width="36" height="24" viewBox="0 0 36 24">
+                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
+                                                <line x1="18" y1="3" x2="18" y2="12" />
+                                                <line x1="6" y1="7" x2="11" y2="14" />
+                                                <line x1="30" y1="7" x2="25" y2="14" />
+                                            </g>
                                         </svg>
                                     </span>
                                     <span className="cta-deco cta-heart-left" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M12 21C12 21 3 13.5 3 8.5 3 5.5 5.5 3.5 8 3.5c1.8 0 3.2 1.1 4 2.5.8-1.4 2.2-2.5 4-2.5 2.5 0 5 2 5 5 0 5-9 12.5-9 12.5z" />
+                                        <svg width="28" height="26" viewBox="0 0 24 22">
+                                            <path
+                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
+                                                fill="none"
+                                                stroke="#FFFFFF"
+                                                strokeWidth="2"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </span>
                                     <span className="cta-deco cta-heart-right" aria-hidden="true">
-                                        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M12 21C12 21 3 13.5 3 8.5 3 5.5 5.5 3.5 8 3.5c1.8 0 3.2 1.1 4 2.5.8-1.4 2.2-2.5 4-2.5 2.5 0 5 2 5 5 0 5-9 12.5-9 12.5z" />
+                                        <svg width="28" height="26" viewBox="0 0 24 22">
+                                            <path
+                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
+                                                fill="none"
+                                                stroke="#FFFFFF"
+                                                strokeWidth="2"
+                                                strokeLinejoin="round"
+                                            />
                                         </svg>
                                     </span>
                                 </div>
