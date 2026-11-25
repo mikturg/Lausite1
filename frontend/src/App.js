@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Gift } from "lucide-react";
 import CherriesCharm from "@/components/CherriesCharm";
 import "@/App.css";
 import NAME_PATHS from "@/namePaths.json";
@@ -8,40 +8,17 @@ const PRIMARY_URL = "https://www.lauegauths.com";
 const SECOND_SITE_URL = "https://www.lauegauths.com";
 
 const TIKTOK_ACCOUNTS = [
-    { handle: "@lauegauthsss", url: "https://www.tiktok.com/@lauegauthsss" },
-    { handle: "@lauegauths2", url: "https://www.tiktok.com/@lauegauths2", spicy: true },
+    { handle: "@lauegirly", url: "https://www.tiktok.com/@lauegirly" },
+    { handle: "@lauegauths2", url: "https://www.tiktok.com/@lauegauths2" },
 ];
+
+const WISHLIST_URL = "https://www.amazon.ca/hz/wishlist/ls/32UV5OZXTYEM9?ref_=wl_share";
 
 // TikTok brand glyph (Simple Icons path) — lucide-react has no TikTok icon.
 function TikTokIcon() {
     return (
-        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true">
             <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-        </svg>
-    );
-}
-
-// Red chili glyph — deterministic red at any size (emoji rendered tiny/greenish).
-function ChiliIcon() {
-    return (
-        <svg
-            viewBox="0 0 24 24"
-            width="13"
-            height="13"
-            aria-hidden="true"
-            style={{ transform: "rotate(12deg)" }}
-        >
-            <path
-                d="M13.6 5.2c.7-1.3 1.8-2.2 3.3-2.6"
-                fill="none"
-                stroke="#3E7C4F"
-                strokeWidth="1.8"
-                strokeLinecap="round"
-            />
-            <path
-                d="M13.4 6.3c4.2 1.2 6.5 5 5.3 9.3-1.3 4.6-6 7.4-11 6.9-1.7-.2-3.1-.8-4-1.5-.5-.4-.4-1.1.2-1.4 4.4-2 7.5-5.2 8.3-10 .1-1.2.5-2.2 1.2-3.3z"
-                fill="#E63428"
-            />
         </svg>
     );
 }
@@ -449,7 +426,7 @@ export default function App() {
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             {/* Primary button + TikTok row, centred in the lower-middle of the photo */}
-                            <div className="absolute bottom-[10%] left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-12">
+                            <div className="absolute bottom-[8%] left-1/2 z-10 flex w-full -translate-x-1/2 flex-col items-center gap-12">
                                 <div className="relative">
                                     <div
                                         className="absolute left-1/2 top-1/2 -z-10 h-[190%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A2233]/25 blur-xl"
@@ -477,26 +454,36 @@ export default function App() {
                                             <a
                                                 key={account.handle}
                                                 data-testid={`tiktok-link-${index + 1}`}
-                                                className={`tiktok-pill${account.spicy ? " tiktok-pill--spicy" : ""}`}
+                                                className="tiktok-pill"
                                                 href={account.url}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                aria-label={
-                                                    account.spicy
-                                                        ? `TikTok ${account.handle}, compte épicé`
-                                                        : `TikTok ${account.handle}`
-                                                }
+                                                aria-label={`TikTok ${account.handle}`}
                                             >
                                                 <TikTokIcon />
                                                 <span className="tiktok-handle">{account.handle}</span>
-                                                {account.spicy && (
-                                                    <span className="tiktok-chili" aria-hidden="true">
-                                                        <ChiliIcon />
-                                                    </span>
-                                                )}
                                             </a>
                                         ))}
                                     </div>
+                                    <a
+                                        data-testid="wishlist-button"
+                                        className="wishlist-pill"
+                                        href={WISHLIST_URL}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        <Gift size={13} strokeWidth={2} aria-hidden="true" />
+                                        <span>
+                                            <span className="wishlist-line">
+                                                Si tu veux me faire plaisir et illuminer ma journée 🥹
+                                            </span>
+                                            <span className="wishlist-line">
+                                                voici ma{" "}
+                                                <strong className="wishlist-strong">wishlist</strong> de
+                                                trucs qui me rendraient full heureuse 😍
+                                            </span>
+                                        </span>
+                                    </a>
                                 </div>
                             </div>
                         </div>

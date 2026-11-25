@@ -223,6 +223,14 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Label more prominent: 0.72 → 0.8rem, weight 500 → 600, color rgba(74,34,51,0.72) → 0.92; letter-spacing/nowrap/centring unchanged
 - Verified at 375px + 1366px: button still clear of the face, nothing overlaps the tagline below
 
+## Implemented (July 2026, v40 — TikTok refresh + wishlist pill)
+- First TikTok account swapped: @lauegauthsss → @lauegirly (https://www.tiktok.com/@lauegirly); @lauegauths2 link unchanged
+- Spicy styling fully removed: no more gradient/glow/chili — both pills identical (white-cream bg, pink icon, dark handle); ChiliIcon component, .tiktok-pill--spicy, .tiktok-chili, spicy-glow and chili-wiggle keyframes, reduced-motion entries all deleted
+- Pills shrunk: padding 0.65/0.95 → 0.45/0.8rem, handle 0.76 → 0.7rem, icon 18 → 15px, softer shadow — light and secondary
+- New wishlist pill under the row: gift icon (lucide Gift, 13px, hot pink) + 2 forced lines ("Si tu veux me faire plaisir et illuminer ma journée 🥹" / "voici ma wishlist de trucs qui me rendraient full heureuse 😍"), "wishlist" bold hot pink; cream bg, thin #F7CAD9 border, 18px radius, 0.6rem text; links to the Amazon.ca wishlist (new tab); fades in with the social group
+- Bug found+fixed in verification: the absolute container's shrink-to-fit width forced the wishlist text onto 3 lines — container now w-full; each line span measured at exactly 1 rendered line (375px + 1366px)
+- Container anchor bottom 10% → 8% to absorb the added pill height
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
