@@ -231,6 +231,12 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Bug found+fixed in verification: the absolute container's shrink-to-fit width forced the wishlist text onto 3 lines — container now w-full; each line span measured at exactly 1 rendered line (375px + 1366px)
 - Container anchor bottom 10% → 8% to absorb the added pill height
 
+## Implemented (July 2026, v41 — TikTok restore, CTA decorations, group lowered)
+- TikTok pills restored to their pre-v40 state: larger padding (0.65/0.95rem), handle 0.76rem, icon 18px, original shadows; @lauegauths2 back to pink-red gradient + breathing glow + cream-badge red chili (spicy/chili CSS, keyframes, ChiliIcon component and reduced-motion entries all restored). ONLY kept change: first pill is @lauegirly → https://www.tiktok.com/@lauegirly
+- CTA decorations added around "Viens me rejoindre" (inside the relative button wrapper, siblings of the anchor so the shimmer's overflow:hidden can't clip them): two white 3-stroke sparkles at the top corners + two white outline hearts at mid-sides; drop-shadow for legibility over the photo, gentle staggered twinkle (2.8s, opacity+scale, delays 0/0.7/1.2/1.9s); aria-hidden, reduced-motion disables the twinkle
+- Whole hero group lowered: container bottom 8% → 3% — on 375px mobile her face/lips are fully clear of the button; wishlist pill bottom sits 18px above the photo's bottom edge, tagline untouched
+- Wishlist pill byte-identical to v40 (2 forced lines verified again: [1,1] rendered)
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
