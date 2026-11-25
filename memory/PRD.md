@@ -250,6 +250,12 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Kept as-is per instruction: restored TikTok pills (@lauegirly white + @lauegauths2 spicy with chili), wishlist pill, lowered group position (bottom 3%)
 - Verified at 375px: zero .cta-deco nodes in DOM, border 0px, original breathing glow measured mid-animation, pills + wishlist intact, face fully visible
 
+## Implemented (July 2026, v44 — CTA decorations restored, subtle outline, button lowered)
+- Decorations restored identical to the v42 reference match: user's exact sparkle SVG (36×24, white 2.5px strokes) above both top corners rotated ±20°, user's exact heart SVG (28×26, white 2px outline) centred on each side; positions re-measured: sparkles ~7px above the button's top edge overlapping the corners, hearts 15px outside the edges; drop-shadow 0 1px 4px rgba(0,0,0,.25); staggered twinkle kept; .cta-deco back in the reduced-motion list
+- Button outline SUBTLE this time per instruction: 1px rgba(255,255,255,0.7) border (not the previous 2px solid) and a gentler glow (base 0 0 18px/.45, peak 0 0 34px/.55 — down from 24px/.55 and 44px/.65); static base shadow kept for reduced-motion
+- Button moved lower/closer to the label: hero container gap-12 → gap-6 (measured button→label gap 24px); container anchor unchanged (bottom 3%)
+- Verified at 375px and 1366px against the reference screenshot: sizes, positions, spacing and stroke thickness match; face fully clear; wishlist and TikTok pills untouched
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps

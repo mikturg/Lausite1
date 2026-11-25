@@ -451,7 +451,7 @@ export default function App() {
                             <div className="hero-fade-right pointer-events-none absolute inset-y-0 right-0 hidden w-[28%] lg:block" />
                             <div className="hero-fade-left pointer-events-none absolute inset-y-0 left-0 hidden w-1/6 lg:block" />
                             {/* Primary button + TikTok row, centred in the lower-middle of the photo */}
-                            <div className="absolute bottom-[3%] left-1/2 z-10 flex w-full -translate-x-1/2 flex-col items-center gap-12">
+                            <div className="absolute bottom-[3%] left-1/2 z-10 flex w-full -translate-x-1/2 flex-col items-center gap-6">
                                 <div className="relative">
                                     <div
                                         className="absolute left-1/2 top-1/2 -z-10 h-[190%] w-[160%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#4A2233]/25 blur-xl"
@@ -466,6 +466,46 @@ export default function App() {
                                     >
                                         <span>Viens me rejoindre</span>
                                     </a>
+                                    <span className="cta-deco cta-sparkle-left" aria-hidden="true">
+                                        <svg width="36" height="24" viewBox="0 0 36 24">
+                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
+                                                <line x1="18" y1="3" x2="18" y2="12" />
+                                                <line x1="6" y1="7" x2="11" y2="14" />
+                                                <line x1="30" y1="7" x2="25" y2="14" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span className="cta-deco cta-sparkle-right" aria-hidden="true">
+                                        <svg width="36" height="24" viewBox="0 0 36 24">
+                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
+                                                <line x1="18" y1="3" x2="18" y2="12" />
+                                                <line x1="6" y1="7" x2="11" y2="14" />
+                                                <line x1="30" y1="7" x2="25" y2="14" />
+                                            </g>
+                                        </svg>
+                                    </span>
+                                    <span className="cta-deco cta-heart-left" aria-hidden="true">
+                                        <svg width="28" height="26" viewBox="0 0 24 22">
+                                            <path
+                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
+                                                fill="none"
+                                                stroke="#FFFFFF"
+                                                strokeWidth="2"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
+                                    <span className="cta-deco cta-heart-right" aria-hidden="true">
+                                        <svg width="28" height="26" viewBox="0 0 24 22">
+                                            <path
+                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
+                                                fill="none"
+                                                stroke="#FFFFFF"
+                                                strokeWidth="2"
+                                                strokeLinejoin="round"
+                                            />
+                                        </svg>
+                                    </span>
                                 </div>
                                 <div
                                     data-testid="tiktok-social"
