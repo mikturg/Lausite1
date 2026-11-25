@@ -267,65 +267,6 @@
     box-shadow: 0 10px 24px rgba(255, 77, 141, 0.35);
 }
 
-/* Second account — warmer, deeper pink-red with a soft breathing glow */
-.tiktok-pill--spicy {
-    background: linear-gradient(135deg, #ff7ba2 0%, #f0447a 45%, #d92b54 100%);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: #ffffff;
-    box-shadow:
-        0 6px 18px rgba(217, 43, 84, 0.38),
-        0 0 14px rgba(255, 100, 140, 0.26);
-    animation: spicy-glow 3.4s ease-in-out infinite;
-}
-
-.tiktok-pill--spicy .tiktok-handle {
-    color: #ffffff;
-}
-
-@keyframes spicy-glow {
-    0%,
-    100% {
-        box-shadow:
-            0 6px 18px rgba(217, 43, 84, 0.38),
-            0 0 14px rgba(255, 100, 140, 0.26);
-    }
-    50% {
-        box-shadow:
-            0 8px 22px rgba(217, 43, 84, 0.46),
-            0 0 26px rgba(255, 100, 140, 0.48);
-    }
-}
-
-.tiktok-chili {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    margin-left: 0.1rem;
-    border-radius: 9999px;
-    background-color: #fffbfd;
-    box-shadow: 0 2px 6px rgba(74, 34, 51, 0.25);
-}
-
-.tiktok-pill:hover .tiktok-chili,
-.tiktok-pill:focus-visible .tiktok-chili {
-    animation: chili-wiggle 0.5s ease;
-}
-
-@keyframes chili-wiggle {
-    0%,
-    100% {
-        transform: rotate(0deg);
-    }
-    30% {
-        transform: rotate(-14deg);
-    }
-    60% {
-        transform: rotate(10deg);
-    }
-}
-
 /* ---------- CTA decorations (sparkles + hearts) ---------- */
 .cta-deco {
     position: absolute;
@@ -383,16 +324,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
-    max-width: calc(100vw - 16px);
+    gap: 0.45rem;
+    max-width: calc(100vw - 8px);
     margin-top: 0.55rem;
-    padding: 0.5rem 0.7rem;
+    padding: 0.58rem 0.7rem;
     border-radius: 18px;
     background-color: rgba(255, 251, 253, 0.92);
     border: 1px solid #f7cad9;
     box-shadow: 0 4px 14px rgba(74, 34, 51, 0.12);
     color: rgba(74, 34, 51, 0.85);
-    font-size: 0.6rem;
+    font-size: 0.69rem;
     font-weight: 500;
     line-height: 1.5;
     text-align: center;
@@ -773,8 +714,6 @@
     .gradient-drift,
     .bg-mark,
     .bokeh,
-    .tiktok-chili,
-    .tiktok-pill--spicy,
     .cta-deco {
         animation: none;
     }

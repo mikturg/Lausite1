@@ -256,6 +256,11 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Button moved lower/closer to the label: hero container gap-12 → gap-6 (measured button→label gap 24px); container anchor unchanged (bottom 3%)
 - Verified at 375px and 1366px against the reference screenshot: sizes, positions, spacing and stroke thickness match; face fully clear; wishlist and TikTok pills untouched
 
+## Implemented (July 2026, v45 — second TikTok pill white again, wishlist +15%)
+- @lauegauths2 back to the identical white style as @lauegirly (white bg, pink icon, dark handle), same kept size; spicy variant, chili badge, ChiliIcon component, spicy-glow/chili-wiggle keyframes and their reduced-motion entries all deleted
+- Wishlist pill ~15% bigger: font 0.6 → 0.69rem (measured 11.04px), Gift icon 13 → 15px, padding vertical 0.5 → 0.58rem, gap 0.4 → 0.45rem, max-width 100vw-16px → 100vw-8px so the forced 2-line layout still holds at 375px
+- Verified at 375px + 1366px: pills byte-identical styles (computed background/color equal), zero chili in DOM, wishlist renders exactly 2 lines ([1,1] measured), decorations and everything else untouched
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps
