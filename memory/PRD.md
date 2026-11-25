@@ -244,6 +244,12 @@ Screenshots at 375/768/1366px after full intro: pills sit cleanly under the CTA,
 - Button itself: 2px white border + outer glow 0 0 24px rgba(255,78,141,0.55) — set as a STATIC box-shadow on .cta-hero (so reduced-motion users keep the glow) and as the base state of the cta-hero-glow keyframes (peak 0 0 44px/.65)
 - Verified against the reference screenshot at 375px and 1366px: size/position/thickness/spacing of sparkles and hearts match, face fully clear, wishlist unchanged
 
+## Implemented (July 2026, v43 — CTA decorations removed)
+- All v41/v42 decoration work reverted: 4 deco spans deleted from JSX; .cta-deco, sparkle/heart positioning rules and cta-twinkle keyframes deleted from CSS; .cta-deco removed from the reduced-motion list
+- Button restored to its pre-decoration state: no border, no static box-shadow, original cta-hero-glow keyframes (base 0 0 22px/.35, peak 0 0 48px/.6)
+- Kept as-is per instruction: restored TikTok pills (@lauegirly white + @lauegauths2 spicy with chili), wishlist pill, lowered group position (bottom 3%)
+- Verified at 375px: zero .cta-deco nodes in DOM, border 0px, original breathing glow measured mid-animation, pills + wishlist intact, face fully visible
+
 ## Backlog
 - P1: Custom OG image (absolute URL) once domain is final
 - P2: Optional analytics events on CTA taps

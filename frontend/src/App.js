@@ -466,46 +466,6 @@ export default function App() {
                                     >
                                         <span>Viens me rejoindre</span>
                                     </a>
-                                    <span className="cta-deco cta-sparkle-left" aria-hidden="true">
-                                        <svg width="36" height="24" viewBox="0 0 36 24">
-                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
-                                                <line x1="18" y1="3" x2="18" y2="12" />
-                                                <line x1="6" y1="7" x2="11" y2="14" />
-                                                <line x1="30" y1="7" x2="25" y2="14" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span className="cta-deco cta-sparkle-right" aria-hidden="true">
-                                        <svg width="36" height="24" viewBox="0 0 36 24">
-                                            <g stroke="#FFFFFF" strokeWidth="2.5" strokeLinecap="round">
-                                                <line x1="18" y1="3" x2="18" y2="12" />
-                                                <line x1="6" y1="7" x2="11" y2="14" />
-                                                <line x1="30" y1="7" x2="25" y2="14" />
-                                            </g>
-                                        </svg>
-                                    </span>
-                                    <span className="cta-deco cta-heart-left" aria-hidden="true">
-                                        <svg width="28" height="26" viewBox="0 0 24 22">
-                                            <path
-                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
-                                                fill="none"
-                                                stroke="#FFFFFF"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </span>
-                                    <span className="cta-deco cta-heart-right" aria-hidden="true">
-                                        <svg width="28" height="26" viewBox="0 0 24 22">
-                                            <path
-                                                d="M12 20s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 5.8-8 11-8 11z"
-                                                fill="none"
-                                                stroke="#FFFFFF"
-                                                strokeWidth="2"
-                                                strokeLinejoin="round"
-                                            />
-                                        </svg>
-                                    </span>
                                 </div>
                                 <div
                                     data-testid="tiktok-social"
